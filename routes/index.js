@@ -233,35 +233,20 @@ module.exports = function(app) {
   })
   // 特定标签文章列表页面
   app.get('/tags/:tag', function (req, res) {
-    Post.getTag(req.params.tag, function (err, posts) {
-      if (err) {
-        req.flash('error',err); 
-        return res.redirect('/');
-      }
-      res.render('tag', {
-        title: 'TAG:' + req.params.tag,
-        posts: posts,
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
+  Post.getTag(req.params.tag, function (err, posts) {
+    if (err) {
+      req.flash('error',err); 
+      return res.redirect('/');
+    }
+    res.render('tag', {
+      title: 'TAG:' + req.params.tag,
+      posts: posts,
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
     });
   });
-  app.get('/search',function(req,res) {
-    Post.search(req.query.keyword, function (err, posts) {
-      if (err) {
-        req.flash('error', err); 
-        return res.redirect('/');
-      }
-      res.render('search', {
-        title: "SEARCH:" + req.query.keyword,
-        posts: posts,
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
-    });
-  });
+});
   // 处理访问用户页的请求，然后从数据库取得该用户的数据并渲染 user.ejs 模版，生成用户页面并显示给用户
   app.get('/u/:name',function(req,res) {
     var page = parseInt(req.query.p) || 1;
