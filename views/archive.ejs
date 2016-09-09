@@ -1,0 +1,13 @@
+<%- include header %>
+<ul class="archive">
+<% var lastYear = 0 %>
+<% posts.forEach(function (post, index) { %>
+<%# 列出每篇文章，如果年份相同就不重复显示年份，即没有年份这个li，如果年份不同就显示年份这个li #%>
+  <% if (lastYear != post.time.year) { %>
+    <li><h3><%= post.time.year %></h3></li>
+  <% lastYear=post.time.year } %>
+  <li><time><%= post.time.day %></time></li>
+  <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></li>
+<% }) %>
+</ul>
+<%- include footer %>
