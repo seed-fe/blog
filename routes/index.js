@@ -384,6 +384,10 @@ module.exports = function(app) {
       res.redirect('/');
     });
   });
+  // app.use([path,] callback [, callback...]): Mounts the specified middleware function or functions at the specified path: the middleware function is executed when the base of the requested path matches path; Since path defaults to “/”, middleware mounted without a path will be executed for every request to the app.
+  app.use(function (req, res) {
+    res.render("404");
+  });
   // 检测未登录
   function checkLogin (req, res, next) {
     if (!req.session.user) {
