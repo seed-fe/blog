@@ -165,7 +165,7 @@ module.exports = function(app) {
     var currentUser = req.session.user,
         tags = [req.body.tag1, req.body.tag2, req.body.tag3],
     // 详见post.ejs中的表单，将表单post请求体中的title和post域存入post对象实例，
-        post = new Post(currentUser.name, req.body.title, tags, req.body.post);
+        post = new Post(currentUser.name, currentUser.head, req.body.title, tags, req.body.post);
         // 调用post原型的save方法将post对象实例存入数据库posts集合
     post.save(function(err) {
       if (err) {
@@ -321,8 +321,12 @@ module.exports = function(app) {
     var date = new Date(),
         time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
                date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+    var md5 = crypto.createHash('md5'),
+        email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex'),
+        head = "http://www.gravatar.com/avatar/" + email_MD5 + "?s=48"; 
     var comment = {
         name: req.body.name,
+        head: head,
         email: req.body.email,
         website: req.body.website,
         time: time,
