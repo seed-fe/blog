@@ -33,6 +33,7 @@ Post.prototype.save = function (callback) {
 		post: this.post,
 		// 我们在文档里增加了 comments 键（数组），用来存储此文章上的留言（一个个对象）。
 		comments: [],
+		// reprint_info: {},
 		pv: 0
 	};
 	// 打开数据库; openCallback(error, db), the callback format for the Db.open method, error: an error instance representing the error during the execution; db: the Db instance if the open method was successful
@@ -372,3 +373,79 @@ Post.search = function(keyword, callback) {
     });
   });
 }
+
+// 转载一篇文章
+/*Post.reprint = function(reprint_from, reprint_to, callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      //找到被转载的文章的原文档
+      collection.findOne({
+        "name": reprint_from.name,
+        "time.day": reprint_from.day,
+        "title": reprint_from.title
+      }, function (err, doc) {
+        if (err) {
+          mongodb.close();
+          return callback(err);
+        }
+
+        var date = new Date();
+        var time = {
+            date: date,
+            year : date.getFullYear(),
+            month : date.getFullYear() + "-" + (date.getMonth() + 1),
+            day : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+            minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
+            date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+        }
+
+        delete doc._id;//注意要删掉原来的 _id
+
+        doc.name = reprint_to.name;
+        doc.head = reprint_to.head;
+        doc.time = time;
+        doc.title = (doc.title.search(/[转载]/) > -1) ? doc.title : "[转载]" + doc.title;
+        doc.comments = [];
+        doc.reprint_info = {"reprint_from": reprint_from};
+        doc.pv = 0;
+
+        //更新被转载的原文档的 reprint_info 内的 reprint_to
+        collection.update({
+          "name": reprint_from.name,
+          "time.day": reprint_from.day,
+          "title": reprint_from.title
+        }, {
+          $push: {
+            "reprint_info.reprint_to": {
+              "name": doc.name,
+              "day": time.day,
+              "title": doc.title
+          }}
+        }, function (err) {
+          if (err) {
+            mongodb.close();
+            return callback(err);
+          }
+        });
+
+        //将转载生成的副本修改后存入数据库，并返回存储后的文档
+        collection.insert(doc, {
+          safe: true
+        }, function (err, post) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
+          callback(err, post[0]);
+        });
+      });
+    });
+  });
+};*/

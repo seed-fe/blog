@@ -1,3 +1,6 @@
+var fs = require('fs');
+var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
+var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -31,6 +34,7 @@ app.use(flash());
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // 加载日志中间件
 app.use(logger('dev'));
+app.use(logger({stream: accessLog}));
 // 加载解析json的中间件
 app.use(bodyParser.json());
 // 加载解析urlencoded请求体的中间件
@@ -39,6 +43,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 // 设置了静态文件目录为 public 文件夹
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function (err, req, res, next) {
+  var meta = '[' + new Date() + '] ' + req.url + '\n';
+  errorLog.write(meta + err.stack + '\n');
+  next();
+});
 // 使用 express-session 和 connect-mongo 模块实现了将会话信息存储到mongodb中。
 app.use(session({
 	// secret用来防止篡改 cookie
