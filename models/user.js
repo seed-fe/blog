@@ -9,7 +9,7 @@ function User (user) {
 
 module.exports = User;
 
-// 存储用户信息
+// 存储用户信息，每一个User实例都会共享save方法，这里通过原型添加了非静态方法，只能通过原型对象或者实例访问
 User.prototype.save = function (callback) {
 	var md5 = crypto.createHash('md5'),
     email_MD5 = md5.update(this.email.toLowerCase()).digest('hex'),
@@ -45,7 +45,7 @@ User.prototype.save = function (callback) {
 		});
 	});
 };
-// 读取用户信息
+// 读取用户信息，这里添加的get是静态方法，不能通过实例访问，直接通过类名(这里是User)访问
 User.get = function(name, callback) {
 	// 打开数据库
     mongodb.open(function (err, db) {

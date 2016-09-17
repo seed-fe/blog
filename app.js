@@ -34,7 +34,7 @@ app.use(flash());
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // 加载日志中间件
 app.use(logger('dev'));
-app.use(logger({stream: accessLog}));
+app.use(logger("combined", {stream: accessLog}));
 // 加载解析json的中间件
 app.use(bodyParser.json());
 // 加载解析urlencoded请求体的中间件
