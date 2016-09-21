@@ -2,17 +2,31 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Blog</title>
-<!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>N-Blog</title>
 <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="/stylesheets/sticky-footer-navbar.css"> -->
+<link rel="stylesheet" type="text/css" href="/stylesheets/blog.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/signin.css">
+<link rel="stylesheet" href="/stylesheets/style.css">
+<!-- <script charset="utf-8" src="/KindEditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/KindEditor/lang/zh_CN.js"></script>
+<script>
+var editor;
+KindEditor.ready(function(K) {
+  editor = K.create('textarea', {
+  allowImageUpload : false,
+  items : [
+    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic',
+    'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright',
+    'insertorderedlist', 'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+  });
+});
+</script> -->
 </head>
 <body>
-
-<header>
-<h1><%= title %></h1>
-</header>
-
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -28,20 +42,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a title="主页" href="/">Home</a></li>
+        <li><a title="主页" href="/">Home</a></li>
         <li><a title="归档" href="/archive">Archive</a></li>
-        <!-- <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li> -->
         <li><a title="标签" href="/tags">Tags</a></li>
         <li><a title="友情链接" href="/links">Links</a></li>
         <% if (user) { %>
@@ -54,48 +56,33 @@
 		<% } %>
       </ul>
       <form class="navbar-form navbar-left" role="search" action='/search' method="get">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+      	<div class="input-group">
+      	  <label for="search" class="sr-only">搜索文章</label>
+	      <input id="search" type="text" name="keyword" class="form-control" required placeholder="Search">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="submit">Go!</button>
+	      </span>
+    	</div>
       </form>
-      <!-- <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul> -->
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<!-- <nav class>
-<span><a title="主页" href="/">home</a></span>
-<span><a title="存档" href="/archive">archive</a></span>
-<span><a title="标签" href="/tags">tags</a></span>
-<span><a title="友情链接" href="/links">links</a></span>
-<% if (user) { %>
-  <span><a title="上传" href="/upload">upload</a></span>
-  <span><a title="发表" href="/post">post</a></span>
-  <span><a title="登出" href="/logout">logout</a></span>
-<% } else { %>
-  <span><a title="登录" href="/login">login</a></span>
-  <span><a title="注册" href="/reg">register</a></span>
-<% } %>
-<span><form action="/search" method="GET"><input type="text" name="keyword" placeholder="SEARCH" class="search" /></form></span>
-</nav> -->
-
-<article>
-<% if (success) { %>
-  <div><%= success %></div>
-<% } %>
-<% if (error) { %>
-  <div><%= error %> </div>
-<% } %>
+<div class="container">
+	<section>
+	<% if (success) { %>
+	  <div class="alert alert-success alert-dismissible col-md-4" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= success %>
+	  </div>
+	<% } %>
+	<% if (error) { %>
+	  <div class="alert alert-warning alert-dismissible col-md-4" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= error %>
+	  </div>  
+	<% } %>
+	</section>
+		<div class="row">
+			<div class="col-sm-8 blog-main">
+				
+			

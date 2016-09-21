@@ -40,7 +40,7 @@ module.exports = function(app) {
       // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
       res.render('index', { 
         // title, user success和error都要传入header.ejs, posts要传入index.ejs
-        title: '主页',
+        // title: '主页',
         user: req.session.user,
         posts: posts,
         page: page,
@@ -58,7 +58,7 @@ module.exports = function(app) {
   app.get('/reg', checkNotLogin);
   app.get('/reg', function (req, res) {
     res.render('reg', {
-      title: '注册',
+      // title: '注册',
       // 在渲染 index.ejs 文件时通过检测 user 判断用户是否在线，根据用户状态的不同显示不同的导航信息
       user: req.session.user,
       // Get an array of flash messages by passing the key to req.flash()，将success或error的message传给success和error变量，渲染ejs模板时传递这两个变量来进行检测并显示通知
@@ -118,7 +118,7 @@ module.exports = function(app) {
   app.get('/login', checkNotLogin);
   app.get('/login', function (req, res) {
     res.render('login', { 
-      title: '登录',
+      // title: '登录',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -153,7 +153,7 @@ module.exports = function(app) {
     // console.log(req.session.user);
     // 渲染模板时一定要把模板中需要用到的变量都传进去
     res.render('post', { 
-      title: '发表',
+      // title: '发表',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -187,7 +187,7 @@ module.exports = function(app) {
   app.get('/upload', checkLogin);
   app.get('/upload', function (req, res) {
     res.render('upload', {
-      title: '文件上传',
+      // title: '文件上传',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -207,7 +207,7 @@ module.exports = function(app) {
         return res.redirect('/');
       }
       res.render('archive', {
-        title: '存档',
+        // title: '存档',
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -223,7 +223,7 @@ module.exports = function(app) {
       return res.redirect('/');
       }
       res.render('tags', {
-        title: '标签',
+        // title: '标签',
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -239,7 +239,7 @@ module.exports = function(app) {
         return res.redirect('/');
       }
       res.render('tag', {
-        title: 'TAG:' + req.params.tag,
+        // title: 'TAG:' + req.params.tag,
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -250,7 +250,7 @@ module.exports = function(app) {
   // 友情链接页面
   app.get('/links',function(req,res) {
     res.render('links', {
-      title: '友情链接',
+      // title: '友情链接',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -264,7 +264,7 @@ module.exports = function(app) {
         return res.redirect('/');
       }
       res.render('search', {
-        title: "SEARCH:" + req.query.keyword,
+        // title: "SEARCH:" + req.query.keyword,
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -289,7 +289,7 @@ module.exports = function(app) {
           return res.redirect('/');
         }
         res.render('user', {
-          title: user.name,
+          // title: user.name,
           posts: posts,
           page: page,
           isFirstPage: (page - 1) == 0,
@@ -309,7 +309,7 @@ module.exports = function(app) {
           return res.redirect('/');
         }
         res.render('article', {
-          title: req.params.title,
+          // title: req.params.title,
           post: post,
           user: req.session.user,
           success: req.flash('success').toString(),
@@ -354,7 +354,7 @@ module.exports = function(app) {
         return res.redirect('back');
       }
       res.render('edit', {
-        title: '编辑',
+        // title: '编辑',
         post: post,
         user: req.session.user,
         success: req.flash('success').toString(),

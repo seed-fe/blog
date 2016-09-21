@@ -1,20 +1,59 @@
 <%- include header %>
+<div class="blog-post">
 <% posts.forEach(function (post, index) { %>
-  <p><h2><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2><a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></p>
-  <p class="info">
+  <p><h2 class="blog-post-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2><a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></p>
+  <p class="blog-post-meta">
     作者：<a href="/u/<%= post.name %>"><%= post.name %></a> | 
     日期：<%= post.time.minute %>
     标签：
     <% if (post.tags) { %>
     	<% post.tags.forEach(function (tag, index) { %>
     		<% if (tag) { %>
-    			<a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+    			<a class="label label-success" href="/tags/<%= tag %>"><%= tag %></a>
     		<% } %>
     	<% }) %>
     <% } %>
   </p>
   <p><%- post.post %></p>
-  <p class="info">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
+  <p class="blog-post-meta">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
 <% }) %>
+</div>
 <%- include paging %>
+<!-- /.blog-main -->
+</div>
+<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset">
+    <h4>About</h4>
+    <p><em>N-blog</em>, a blog system demo based on node.js, express, mongodb, ejs and bootstrap.</p>
+  </div>
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ol class="list-unstyled">
+      <li><a href="#">March 2014</a></li>
+      <li><a href="#">February 2014</a></li>
+      <li><a href="#">January 2014</a></li>
+      <li><a href="#">December 2013</a></li>
+      <li><a href="#">November 2013</a></li>
+      <li><a href="#">October 2013</a></li>
+      <li><a href="#">September 2013</a></li>
+      <li><a href="#">August 2013</a></li>
+      <li><a href="#">July 2013</a></li>
+      <li><a href="#">June 2013</a></li>
+      <li><a href="#">May 2013</a></li>
+      <li><a href="#">April 2013</a></li>
+    </ol>
+  </div>
+  <div class="sidebar-module">
+    <h4>Elsewhere</h4>
+    <ol class="list-unstyled">
+      <li><a href="#">GitHub</a></li>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Facebook</a></li>
+    </ol>
+  </div>
+</div><!-- /.blog-sidebar -->
+<!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
 <%- include footer %>

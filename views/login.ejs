@@ -1,7 +1,14 @@
 <%- include header %>
-<form method="post">
-  用户名：<input type="text" name="name"/ required><br />
-  密码：  <input type="password" name="password"/ required><br />
-         <input type="submit" value="登录"/>
+<form class="form-signin" role="form" method="post">
+	<h2 class="form-signin-heading">Please sign in~</h2>
+  	<input class="form-control" type="text" name="name"/ required placeholder="username" autofocus><br />
+  	<input class="form-control" type="password" name="password"/ required placeholder="password"><br />
+   	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
+<!-- /.blog-main -->
+</div>
+<!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
 <%- include footer %>
