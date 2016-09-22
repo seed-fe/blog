@@ -42,20 +42,20 @@ KindEditor.ready(function(K) {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a title="主页" href="/">Home</a></li>
+        <li><a title="主页" href="/index">Home</a></li>
         <li><a title="归档" href="/archive">Archive</a></li>
         <li><a title="标签" href="/tags">Tags</a></li>
         <li><a title="友情链接" href="/links">Links</a></li>
         <% if (user) { %>
-		  <li><a title="上传" href="/upload">upload</a></li>
-		  <li><a title="发表" href="/post">post</a></li>
-		  <li><a title="登出" href="/logout">logout</a></li>
-		<% } else { %>
-		  <li><a title="登录" href="/login">login</a></li>
-		  <li><a title="注册" href="/reg">register</a></li>
-		<% } %>
+		      <li><a title="上传" href="/upload">upload</a></li>
+		      <li><a title="发表" href="/post">post</a></li>
+		      <li><a title="登出" href="/logout">logout</a></li>
+		    <% } else { %>
+		      <li><a title="登录" href="/login">login</a></li>
+		      <li><a title="注册" href="/reg">register</a></li>
+		    <% } %>
       </ul>
-      <form class="navbar-form navbar-left" role="search" action='/search' method="get">
+      <form class="navbar-form navbar-right" role="search" action='/search' method="get">
       	<div class="input-group">
       	  <label for="search" class="sr-only">搜索文章</label>
 	      <input id="search" type="text" name="keyword" class="form-control" required placeholder="Search">

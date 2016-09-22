@@ -26,7 +26,7 @@ var upload = multer({
     storage: storage
 });
 module.exports = function(app) {
-  app.get('/', function (req, res) {
+  app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
     // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了
