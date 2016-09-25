@@ -52,3 +52,11 @@ background-color: green;
  */
 
 body{ padding-top: 70px; }
+.blog-post .post-main{
+	height: 200px;
+	line-height: 25px;
+	overflow-y: hidden;
+	margin-bottom: 10px;
+}
+.blog-post .elli{font-size: 20px;}
+#nav_username{font-style: italic; font-weight: bold; color: #1f1;}

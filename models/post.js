@@ -65,7 +65,7 @@ Post.prototype.save = function (callback) {
 // 读取一个人的全部文章(传入参数name)或者获取所有人的文章(不传入参数，query对象为空)
 // Post.getAll = function(name, callback) {
 // 一次获取十篇文章
-Post.getTen = function(name, page, callback) {
+Post.getFive = function(name, page, callback) {
 	// 打开数据库
 	mongodb.open(function(err, db) {
 		if (err) {
@@ -87,8 +87,8 @@ Post.getTen = function(name, page, callback) {
 				// 根据query对象查询文章, query is the cursor query object; .sort({property: 1 or -1}): 按某个属性的升序或降序排列, 下面是按时间的降序，也就是最新的文章最前
 				// find(query): creates a cursor for a query that can be used to iterate over results from MongoDB
 				collection.find(query, {
-					skip: (page - 1)*10,
-					limit: 10
+					skip: (page - 1)*5,
+					limit: 5
 				}).sort({
 					// 按降序排列
 					time: -1
