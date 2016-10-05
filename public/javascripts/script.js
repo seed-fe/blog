@@ -1,17 +1,8 @@
 $(document).ready(function() {
-	// 字符串中不包含任何数字字符时会转换为NaN，对于减法操作符，如果有一个是NaN，结果就是Nan
+	// 字符串中不包含任何数字字符时会转换为NaN，对于减法操作符，如果有一个是NaN，结果就是NaN
 	/*var a="password"-"repeat";
 	console.log(a);*/// NaN
-	// 给导航栏动态添加active类
-	// 关于子元素的选择，'>'只选择直接子元素，' '选择所有满足条件的子元素
-	var links = $('#bs-example-navbar-collapse-1 a');
-	for (var i = 0; i < links.length; i++) {
-		if (window.location.href.indexOf(links[i].href)!=-1) {
-			// console.log(i);
-			// 这里不能写成links[i].parent，会提示parent is not a function，因为links[i]是一个dom元素，$(links[i])才是一个jQuery object
-			$(links[i]).parent().addClass('active');
-		}
-	}
+	highlight();
 	// 让页面警告栏3秒后消失
 	// $('.alert-dismissible').hide('slow');
 	// $('.alert-dismissible').fadeOut('slow');
@@ -68,11 +59,20 @@ $(document).ready(function() {
 			}
 		}
 	})
+	
 	$('#login').validate({
+		onfocuseout: true,
+		// onkeyup好像默认是true
+		onkeyup:false,
 		rules:{
 			name:{
 				required:true,
-				rangelength:[2,10]
+				rangelength:[2,10],
+				remote:{
+					url:"/validate",
+					type:"get",
+					asyn:true
+				}
 			},
 			password:{
 				required:true,
@@ -82,13 +82,49 @@ $(document).ready(function() {
 		messages:{
 			name:{
 				required:"请输入用户名",
-				rangelength:"用户名长度需在2-10位之间"
+				rangelength:"用户名长度需在2-10位之间",
+				remote:"用户名不存在"
 			},
 			password:{
 				required:"请输入密码",
 				rangelength:"密码长度在6位到16位之间"
 			}
+		},
+		// 自定义错误消息的位置
+		errorPlacement: function(error, element) {
+			element.parent().append(error);
+		},
+		success: function(label) {
+
+		}
+	})
+	$('#login').submit(function(event) {
+		event.preventDefault();
+		// 表单序列化
+		var formValues = $(this).serialize();
+		// console.log(formValues);
+		// 表单各个字段都有效才能提交
+		if ($('#login').valid()) {
+				$.post('/login', formValues, function(data) {
+				// console.log(data);
+				$('nav.navbar-fixed-top').remove();
+				$('section').remove();
+				$(data).insertBefore('#main_body');
+				highlight();
+			})
 		}
 	})
 });
 
+// 给导航栏动态添加active类
+function highlight () {
+	// 关于子元素的选择，'>'只选择直接子元素，' '选择所有满足条件的子元素
+	var links = $('#bs-example-navbar-collapse-1 a');
+	for (var i = 0; i < links.length; i++) {
+		if (window.location.href.indexOf(links[i].href)!=-1) {
+			// console.log(i);
+			// 这里不能写成links[i].parent，会提示parent is not a function，因为links[i]是一个dom元素，$(links[i])才是一个jQuery object
+			$(links[i]).parent().addClass('active');
+		}
+	}
+}

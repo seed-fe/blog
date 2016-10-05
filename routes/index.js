@@ -26,6 +26,13 @@ var upload = multer({
     storage: storage
 });
 module.exports = function(app) {
+  // 远程校验
+  app.get('/validate',function(req,res) {
+      User.get(req.query.name, function(err, user) {
+        // 下面不要加上status，否则响应会aborted，不知道为什么……
+        return !user ? res.json(false) : res.json(true)
+      })
+  });
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
@@ -51,7 +58,7 @@ module.exports = function(app) {
       });
     });
   });
-  app.post('/index', function (req, res) {
+  app.post('/login', function (req, res) {
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
         password = md5.update(req.body.password).digest('hex');
@@ -59,17 +66,22 @@ module.exports = function(app) {
     User.get(req.body.name, function (err, user) {
       if (!user) {
         req.flash('error', '用户不存在!'); 
-        return res.redirect('/login');//用户不存在则跳转到登录页
+        return res.redirect('/index');//用户不存在则跳转到主页
       }
       //检查密码是否一致
       if (user.password != password) {
         req.flash('error', '密码错误!'); 
-        return res.redirect('/login');//密码错误则跳转到登录页
+        return res.redirect('/index');//密码错误则跳转到主页
       }
       //用户名密码都匹配后，将用户信息存入 session
       req.session.user = user;
       req.flash('success', '登陆成功!');
-      res.redirect('/index');//登陆成功后跳转到主页
+      // res.redirect('/index');//登陆成功后跳转到主页
+      res.render('nav', {
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
     });
   });
   /*app.get('/nswbmw', function (req, res) {
@@ -137,7 +149,7 @@ module.exports = function(app) {
     });
   });
   // 已登陆则不能访问登录页面，返回之前的页面，否则通过next转移控制权，继续进入登录页面
-  app.get('/login', checkNotLogin);
+  /*app.get('/login', checkNotLogin);
   app.get('/login', function (req, res) {
     res.render('login', { 
       // title: '登录',
@@ -145,9 +157,9 @@ module.exports = function(app) {
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
-  });
+  });*/
   // 已登陆则不能重复登录，返回之前的页面，否则通过next转移控制权，继续进入登录页面
-  app.post('/login', checkNotLogin);
+  /*app.post('/login', checkNotLogin);
   app.post('/login', function (req, res) {
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
@@ -168,7 +180,7 @@ module.exports = function(app) {
       req.flash('success', '登陆成功!');
       res.redirect('/index');//登陆成功后跳转到主页
     });
-  });
+  });*/
   // 未登录则要先登录
   app.get('/post',checkLogin);
   app.get('/post', function (req, res) {
@@ -442,7 +454,7 @@ module.exports = function(app) {
   function checkLogin (req, res, next) {
     if (!req.session.user) {
       req.flash('error', '未登录!');
-      return res.redirect('/login');// 这里要加上return, 否则出现'can't set headers after they're sent'
+      return res.redirect('/index');// 这里要加上return, 否则出现'can't set headers after they're sent'
     }
     next();
   }

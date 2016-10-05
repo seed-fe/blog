@@ -1,0 +1,69 @@
+<nav class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">N-Blog</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a title="主页" href="/index">主页</a></li>
+        <li><a title="归档" href="/archive">归档</a></li>
+        <li><a title="标签" href="/tags">标签</a></li>
+        <!-- <li><a title="友情链接" href="/links">Links</a></li> -->
+        <% if (user) { %>
+          <li><a title="访问你的文章页" href="/u/<%= user.name%>" id="nav_username">Hi, <%= user.name %> !</a></li>
+		      <li><a title="上传" href="/upload">上传</a></li>
+		      <li><a title="发表" href="/post">发表</a></li>
+		      <li><a title="登出" href="/logout">登出</a></li>
+          </ul>
+		    <% } else { %>
+		      <li><a title="注册" href="/reg">注册</a></li>
+          <!-- <li><a title="登录" href="/login">login</a></li> -->
+      </ul>
+      <form id="login" class="navbar-form navbar-left form-inline" role="search" action="/login" method="post">
+            <div class="form-group form-inline">
+              <label for="login_username" class="sr-only">用户名</label>
+              <input id="login_username" type="text" name="name" class="form-control" required placeholder="username">
+              </div>
+              <div class="form-group form-inline">
+                <label for="login_password" class="sr-only">密码</label>
+              <input id="login_password" type="password" name="password" class="form-control" required placeholder="password">
+              </div>
+                <button class="btn btn-default" type="submit">登录!</button>
+          </form>
+          <% } %>
+      <form class="navbar-form navbar-right" role="search" action='/search' method="get">
+      	<div class="input-group">
+      	  <label for="search" class="sr-only">搜索文章</label>
+	      <input id="search" type="text" name="keyword" class="form-control" required placeholder="Search">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="submit">Go!</button>
+	      </span>
+    	</div>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+	<section>
+	<% if (success) { %>
+	  <div class="alert alert-success alert-dismissible col-md-4 fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= success %>
+	  </div>
+	<% } %>
+	<% if (error) { %>
+	  <div class="alert alert-warning alert-dismissible col-md-4" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= error %>
+	  </div>  
+	<% } %>
+	</section>
