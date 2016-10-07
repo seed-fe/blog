@@ -1,0 +1,8 @@
+<div class="sidebar-module">
+    <h4>Tags</h4>
+    <ol class="list-unstyled">
+    <% posts.forEach(function (tag, index) { %>
+      <a class="label label-success" href="/tags/<%= tag %>"><%= tag %></a>
+    <% }) %>  
+    </ol>
+  </div>

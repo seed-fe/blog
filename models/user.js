@@ -33,7 +33,7 @@ User.prototype.save = function (callback) {
 				return callback(err);//错误，直接return err信息，后面的程序就不运行了
 			}
 			// 将用户数据插入users集合; insert(docs, options, callback); insetWriteOpCallback(err, result), result: the result object if the command was executed successfully
-			collection.insert(user, {
+			collection.insertOne(user, {
 				safe: true
 			}, function(err, user) {
 				mongodb.close();

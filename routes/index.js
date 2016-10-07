@@ -33,6 +33,13 @@ module.exports = function(app) {
         return !user ? res.json(false) : res.json(true)
       })
   });
+  app.get('/validate_login',function(req,res) {
+     User.get(req.query.name, function(err, user) {
+        // 下面不要加上status，否则响应会aborted，不知道为什么……
+        return user ? res.json(false) : res.json(true)
+      }) 
+  });
+  // 主页
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);

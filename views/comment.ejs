@@ -11,11 +11,11 @@
 <form role="form" method="post" action="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
 <% if (user) { %>
   姓名：<input type="text" name="name" value="<%= user.name %>" /><br />
-  邮箱：<input type="text" name="email" value="<%= user.email %>" /><br />
+  邮箱：<input type="text" name="email" value="<%= user.email %>" /> （不会公开）<br />
   网址：<input type="text" name="website" value="/u/<%= user.name %>" /><br />
 <% } else { %>
   姓名：<input type="text" name="name" /><br />
-  邮箱：<input type="text" name="email" /><br />
+  邮箱：<input type="text" name="email" /> （不会公开）<br />
   网址：<input type="text" name="website" value="http://" /><br />
 <% } %>
   <br>

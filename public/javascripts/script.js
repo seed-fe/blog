@@ -9,14 +9,18 @@ $(document).ready(function() {
 	/*表单验证*/
 	$('#reg').validate({
 		// 校验通过后不能提交，便于本地调试，不需要和后端交互
-		debug:true,
+		// debug:true,
 		// 校验规则，和表单控件的name属性匹配
 		rules:{
 			name:{
 				required:true,
 				// minlength:2,
 				// maxlength:10
-				rangelength:[2,10]
+				rangelength:[2,10],
+				remote:{
+					url:"/validate_login",
+					type:"get"
+				}
 			},
 			password:{
 				required:true,
@@ -41,7 +45,8 @@ $(document).ready(function() {
 				required:"请填写用户名",
 				// minlength:"用户名长度需在2-10位之间",
 				// maxlength:"用户名长度需在2-10位之间"
-				rangelength:"用户名长度需在2-10位之间"
+				rangelength:"用户名长度需在2-10位之间",
+				remote:"用户名已存在"
 			},
 			password:{
 				required:"请输入密码",
@@ -89,13 +94,6 @@ $(document).ready(function() {
 				required:"请输入密码",
 				rangelength:"密码长度在6位到16位之间"
 			}
-		},
-		// 自定义错误消息的位置
-		errorPlacement: function(error, element) {
-			element.parent().append(error);
-		},
-		success: function(label) {
-
 		}
 	})
 	$('#login').submit(function(event) {
