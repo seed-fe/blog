@@ -9,7 +9,7 @@ $(document).ready(function() {
 	/*表单验证*/
 	$('#reg').validate({
 		// 校验通过后不能提交，便于本地调试，不需要和后端交互
-		// debug:true,
+		debug:true,
 		// 校验规则，和表单控件的name属性匹配
 		rules:{
 			name:{
@@ -18,7 +18,7 @@ $(document).ready(function() {
 				// maxlength:10
 				rangelength:[2,10],
 				remote:{
-					url:"/validate_login",
+					url:"/validate_reg",
 					type:"get"
 				}
 			},
@@ -62,7 +62,10 @@ $(document).ready(function() {
 				required:"请输入邮箱",
 				email:"请输入合法的邮箱格式"
 			}
-		}
+		},
+/*		errorPlacement: function(error, element) {
+
+		}*/
 	})
 	
 	$('#login').validate({
@@ -75,8 +78,7 @@ $(document).ready(function() {
 				rangelength:[2,10],
 				remote:{
 					url:"/validate",
-					type:"get",
-					asyn:true
+					type:"get"
 				}
 			},
 			password:{
@@ -96,22 +98,22 @@ $(document).ready(function() {
 			}
 		}
 	})
-	$('#login').submit(function(event) {
-		event.preventDefault();
-		// 表单序列化
-		var formValues = $(this).serialize();
-		// console.log(formValues);
-		// 表单各个字段都有效才能提交
-		if ($('#login').valid()) {
-				$.post('/login', formValues, function(data) {
-				// console.log(data);
-				$('nav.navbar-fixed-top').remove();
-				$('section').remove();
-				$(data).insertBefore('#main_body');
-				highlight();
-			})
-		}
-	})
+	// $('#login').submit(function(event) {
+	// 	event.preventDefault();
+	// 	// 表单序列化
+	// 	var formValues = $(this).serialize();
+	// 	// console.log(formValues);
+	// 	// 表单各个字段都有效才能提交
+	// 	if ($('#login').valid()) {
+	// 			$.post('/login', formValues, function(data) {
+	// 			// console.log(data);
+	// 			/*$('nav.navbar-fixed-top').remove();
+	// 			$('section').remove();
+	// 			$(data).insertBefore('#main_body');*/
+	// 			highlight();
+	// 		})
+	// 	}
+	// })
 });
 
 // 给导航栏动态添加active类

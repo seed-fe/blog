@@ -1,0 +1,47 @@
+<%- include header%>
+      <div class="jumbotron">
+        <h1 class="text-center">N-blog</h1>
+        <h2 class="text-center">a blog system demo for learning node.js, express, mongodb, bootstrap, jquery, etc.</h2>
+      </div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#register" role="tab" data-toggle="tab">注册</a></li>
+        <li role="presentation"><a href="#signin" role="tab" data-toggle="tab">登录</a></li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel1" class="tab-pane fade in active" id="register">
+          <form id="reg" class="form-signin" role="form" method="post" action="/reg">
+            <div class="input-wrapper">
+              <input type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
+            </div>
+            <div class="input-wrapper">
+              <input type="email" name="email" class="form-control" placeholder="邮箱" required>
+            </div>
+            <div class="input-wrapper">
+              <input id="regpassword" name="password" type="password" class="form-control" placeholder="密码" required>  
+            </div>
+            <div class="input-wrapper">
+              <input id="regpasswordagain" name="password-repeat" type="password" class="form-control" placeholder="确认密码" required>  
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+          </form>
+        </div>
+        <div role="tabpane1" class="tab-pane fade" id="signin">
+          <form id="login" class="form-signin" role="form" method="post" action="/login">
+            <div class="input-wrapper">
+              <input type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
+            </div>
+            <div class="input-wrapper">
+              <input id="loginpassword" name="password" type="password" class="form-control" placeholder="密码" required>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="remember-me"> 记住我
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+          </form>
+        </div>
+      </div>        
+    </div><!-- container -->
+<%- include footer %>

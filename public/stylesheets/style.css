@@ -1,55 +1,3 @@
- /*inspired by http://yihui.name/cn/ */
-/* *{padding:0;margin:0;}
-body{width:600px;margin:2em auto;padding:0 2em;font-size:14px;font-family:"Microsoft YaHei";}
-p{line-height:24px;margin:1em 0;}
-header{padding:.5em 0;border-bottom:1px solid #cccccc;}
-nav{float:left;font-family:"Microsoft YaHei";font-size:1.1em;text-transform:uppercase;margin-left:-12em;width:9em;text-align:right;}
-nav a{display:block;text-decoration:none;padding:.7em 1em;color:#000000;}
-nav a:hover{background-color:#ff0000;color:#f9f9f9;-webkit-transition:color .2s linear;}
-article{font-size:16px;padding-top:.5em;}
-article a{color:#dd0000;text-decoration:none;}
-article a:hover{color:#333333;text-decoration:underline;}
-.info{font-size:14px;}
-.edit{margin:3px;padding:2px 5px;border-radius:3px;background-color:#f3f3f3;color:#333;font-size:13px;}
-.edit:hover{text-decoration:none;background-color:#f00;color:#fff;-webkit-transition:color .2s linear;}
-.prepage a{float:left;text-decoration:none;padding:.5em 1em;color:#ff0000;font-weight:bold;}
-.nextpage a{float:right;text-decoration:none;padding:.5em 1em;color:#ff0000;font-weight:bold;}
-.prepage a:hover,.nextpage a:hover{text-decoration:none;background-color:#ff0000;color:#f9f9f9;-webkit-transition:color .2s linear;}
-.archive{list-style:none;line-height:28px;}
-.archive h3{margin:0.5em 0;}
-.archive time{float:left;font-size:14px;color:#999999;margin-right:1.2em;}
-.tag{background-color:#ff0000;border-radius:3px;font-size:14px;color:#ffffff;display:inline-block;padding:0 5px;margin-bottom:8px;}
-.tag:hover{text-decoration:none;background-color:#ffffff;color:#000000;-webkit-transition:color .2s linear;}
-.search{border:0;width:6em;text-align:center;font-size:1em;margin:0.5em 0;}
-.l_head{float:left;margin-left:-4em;box-shadow:0px 1px 4px #888;}
-.r_head{float:right;margin-top:-2.5em;box-shadow:0px 1px 4px #888;} */
-
-/*通过媒体查询让背景色响应宽度变化*/
-/* body {
-background-color: grey;
-}
-超过960px就变grey, 这里960还包括右边滑动的条
-@media screen and (max-width: 960px) {
-body {
-background-color: red;
-}
-}
-@media screen and (max-width: 768px) {
-body {
-background-color: orange;
-}
-}
-@media screen and (max-width: 550px) {
-body {
-background-color: yellow;
-}
-}
-@media screen and (max-width: 320px) {
-body {
-background-color: green;
-}
-} 
- */
 
 body{ padding-top: 70px; }
 .blog-post .post-main{
@@ -58,5 +6,44 @@ body{ padding-top: 70px; }
 	overflow-y: hidden;
 	margin-bottom: 10px;
 }
+
+/*  导航条上显示用户名的部分 */
 .blog-post .elli{font-size: 20px;}
 #nav_username{font-style: italic; font-weight: bold; color: #1f1;}
+
+/* 注册页选项卡 */
+.nav-tabs{width: 124px; margin:0 auto;}
+/* 注册页表单 */
+.form-signin input[type="text"]{
+	margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.form-signin input[id="regpassword"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+/* 表单整体大小固定 */
+.tab-content{
+	height: 262px
+}
+/* 表单部分宽度 */
+.form-signin{
+  /*max-width: 430px;*/
+}
+/* 把错误信息定位到输入框内, 先用一个相对定位的div包裹输入框，然后对error的label进行绝对定位就会相对于父div定位 */
+.input-wrapper{
+  position: relative;
+}
+#name-error, #email-error, #regpassword-error, #regpasswordagain-error, #loginpassword-error{
+  position: absolute;
+  right: 8px;
+  top: 12px;
+  color: #c33;
+}

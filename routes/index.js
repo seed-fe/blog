@@ -26,45 +26,50 @@ var upload = multer({
     storage: storage
 });
 module.exports = function(app) {
-  // 远程校验
+  // 登录远程校验
   app.get('/validate',function(req,res) {
       User.get(req.query.name, function(err, user) {
         // 下面不要加上status，否则响应会aborted，不知道为什么……
         return !user ? res.json(false) : res.json(true)
       })
   });
-  app.get('/validate_login',function(req,res) {
+  // 注册远程校验
+  app.get('/validate_reg',function(req,res) {
      User.get(req.query.name, function(err, user) {
         // 下面不要加上status，否则响应会aborted，不知道为什么……
         return user ? res.json(false) : res.json(true)
       }) 
   });
-  // 主页
+  // 主页, 未登录的时候显示登录和注册页，登录了才显示有文章的主页
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
-    // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了
-    var page = parseInt(req.query.p) || 1;
-    // Post.getAll(null, function(err, posts) {
-    Post.getFive(null, page, function(err, posts, total) {
-      if (err) {
-        posts = [];
-      }
-      // 调用 res.render() 渲染模版，并将其产生的页面直接返回给客户端。它接受两个参数，第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译
-      // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
-      res.render('index', { 
-        // title, user success和error都要传入header.ejs, posts要传入index.ejs
-        // title: '主页',
-        user: req.session.user,
-        posts: posts,
-        page: page,
-        isFirstPage: (page - 1) == 0,
-        isLastPage: ((page - 1) * 5 + posts.length) == total,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
+    if (!req.session.user) {
+      console.log(req.flash('success'));
+      res.render('main',{});
+    } else {
+      // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了
+      var page = parseInt(req.query.p) || 1;
+      // Post.getAll(null, function(err, posts) {
+      Post.getFive(null, page, function(err, posts, total) {
+        if (err) {
+          posts = [];
+        }
+        // 调用 res.render() 渲染模版，并将其产生的页面直接返回给客户端。它接受两个参数，第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译
+        // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
+        res.render('index', { 
+          user: req.session.user,
+          posts: posts,
+          page: page,
+          isFirstPage: (page - 1) == 0,
+          isLastPage: ((page - 1) * 5 + posts.length) == total,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
       });
-    });
+    }
   });
+  app.post('/login', checkNotLogin);
   app.post('/login', function (req, res) {
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
@@ -73,37 +78,17 @@ module.exports = function(app) {
     User.get(req.body.name, function (err, user) {
       if (!user) {
         req.flash('error', '用户不存在!'); 
-        return res.redirect('/index');//用户不存在则跳转到主页
+        return res.redirect('/index');//用户不存在则跳转到登录页
       }
       //检查密码是否一致
       if (user.password != password) {
         req.flash('error', '密码错误!'); 
-        return res.redirect('/index');//密码错误则跳转到主页
+        return res.redirect('/index');//密码错误则跳转到登录页
       }
       //用户名密码都匹配后，将用户信息存入 session
       req.session.user = user;
       req.flash('success', '登陆成功!');
-      // res.redirect('/index');//登陆成功后跳转到主页
-      res.render('nav', {
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
-    });
-  });
-  /*app.get('/nswbmw', function (req, res) {
-    res.send('hello,world!');
-  });*/
-  // 已登陆则不能访问注册页面，返回之前的页面，否则通过next转移控制权，继续进入登录页面
-  app.get('/reg', checkNotLogin);
-  app.get('/reg', function (req, res) {
-    res.render('reg', {
-      // title: '注册',
-      // 在渲染 index.ejs 文件时通过检测 user 判断用户是否在线，根据用户状态的不同显示不同的导航信息
-      user: req.session.user,
-      // Get an array of flash messages by passing the key to req.flash()，将success或error的message传给success和error变量，渲染ejs模板时传递这两个变量来进行检测并显示通知
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString()
+      res.redirect('/index');//登陆成功后跳转到主页
     });
   });
   // 已登陆则不能访问注册页面，返回之前的页面，否则通过next转移控制权，继续进入登录页面
@@ -118,7 +103,7 @@ module.exports = function(app) {
     if (password_re != password) {
       req.flash('error', '两次输入的密码不一致!'); 
       // res.redirect： 重定向功能，实现了页面的跳转
-      return res.redirect('/reg');//返回注册页
+      return res.redirect('/index');//返回注册页
     }
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
@@ -140,13 +125,13 @@ module.exports = function(app) {
       // User对象的get方法第二个参数是callback回调函数，这里有err和user两个参数，在user.js的66行，只有成功查询到了用户信息callback才会传入null和user两个参数，否则只会传入err一个参数，因此只有用户已存在下面的if判断才为true
       if (user) {
         req.flash('error', '用户已存在!');
-        return res.redirect('/reg');//返回注册页
+        return res.redirect('/index');//返回注册页
       }
       //如果不存在则新增用户
       newUser.save(function (err, user) {
         if (err) {
           req.flash('error', err);
-          return res.redirect('/reg');//注册失败返回注册页
+          return res.redirect('/index');//注册失败返回注册页
         }
         req.session.user = newUser;//注册成功将则用户信息存入 session
         // Set a flash message by passing the key, followed by the value, to req.flash().
@@ -155,39 +140,6 @@ module.exports = function(app) {
       });
     });
   });
-  // 已登陆则不能访问登录页面，返回之前的页面，否则通过next转移控制权，继续进入登录页面
-  /*app.get('/login', checkNotLogin);
-  app.get('/login', function (req, res) {
-    res.render('login', { 
-      // title: '登录',
-      user: req.session.user,
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString()
-    });
-  });*/
-  // 已登陆则不能重复登录，返回之前的页面，否则通过next转移控制权，继续进入登录页面
-  /*app.post('/login', checkNotLogin);
-  app.post('/login', function (req, res) {
-    //生成密码的 md5 值
-    var md5 = crypto.createHash('md5'),
-        password = md5.update(req.body.password).digest('hex');
-    //检查用户是否存在
-    User.get(req.body.name, function (err, user) {
-      if (!user) {
-        req.flash('error', '用户不存在!'); 
-        return res.redirect('/login');//用户不存在则跳转到登录页
-      }
-      //检查密码是否一致
-      if (user.password != password) {
-        req.flash('error', '密码错误!'); 
-        return res.redirect('/login');//密码错误则跳转到登录页
-      }
-      //用户名密码都匹配后，将用户信息存入 session
-      req.session.user = user;
-      req.flash('success', '登陆成功!');
-      res.redirect('/index');//登陆成功后跳转到主页
-    });
-  });*/
   // 未登录则要先登录
   app.get('/post',checkLogin);
   app.get('/post', function (req, res) {
@@ -457,15 +409,15 @@ module.exports = function(app) {
   app.use(function (req, res) {
     res.render("404");
   });
-  // 检测未登录
+  // 未登录则跳转到登录页
   function checkLogin (req, res, next) {
     if (!req.session.user) {
       req.flash('error', '未登录!');
-      return res.redirect('/index');// 这里要加上return, 否则出现'can't set headers after they're sent'
+      return res.redirect('/');// 这里要加上return, 否则出现'can't set headers after they're sent'
     }
     next();
   }
-  // 检测已登陆
+  // 已登陆则退回之前页面
   function checkNotLogin (req, res, next) {
     if (req.session.user) {
       req.flash('error', '已登陆！');
