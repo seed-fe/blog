@@ -1,5 +1,7 @@
 <%- include header %>
 <%- include nav %>
+<div class="row" id="main_body">
+      <div class="col-sm-8 blog-main">
 <ul class="archive">
 <% var lastYear = 0 %>
 <% posts.forEach(function (post, index) { %>
@@ -10,4 +12,14 @@
     <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></li>
 <% }) %>
 </ul>
+<!-- /.blog-main -->
+</div>
+<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+<%- include sidebar_about%>
+  <%- include sidebar_tags %>
+</div><!-- /.blog-sidebar -->
+<!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
 <%- include footer %>

@@ -2,14 +2,12 @@ $(document).ready(function() {
 	// 字符串中不包含任何数字字符时会转换为NaN，对于减法操作符，如果有一个是NaN，结果就是NaN
 	/*var a="password"-"repeat";
 	console.log(a);*/// NaN
+	// 
 	highlight();
-	// 让页面警告栏3秒后消失
-	// $('.alert-dismissible').hide('slow');
-	// $('.alert-dismissible').fadeOut('slow');
-	/*表单验证*/
+	/*注册表单验证*/
 	$('#reg').validate({
 		// 校验通过后不能提交，便于本地调试，不需要和后端交互
-		debug:true,
+		// debug:true,
 		// 校验规则，和表单控件的name属性匹配
 		rules:{
 			name:{
@@ -62,12 +60,9 @@ $(document).ready(function() {
 				required:"请输入邮箱",
 				email:"请输入合法的邮箱格式"
 			}
-		},
-/*		errorPlacement: function(error, element) {
-
-		}*/
-	})
-	
+		}
+	});
+	// 登录表单验证
 	$('#login').validate({
 		onfocuseout: true,
 		// onkeyup好像默认是true
@@ -98,22 +93,6 @@ $(document).ready(function() {
 			}
 		}
 	})
-	// $('#login').submit(function(event) {
-	// 	event.preventDefault();
-	// 	// 表单序列化
-	// 	var formValues = $(this).serialize();
-	// 	// console.log(formValues);
-	// 	// 表单各个字段都有效才能提交
-	// 	if ($('#login').valid()) {
-	// 			$.post('/login', formValues, function(data) {
-	// 			// console.log(data);
-	// 			/*$('nav.navbar-fixed-top').remove();
-	// 			$('section').remove();
-	// 			$(data).insertBefore('#main_body');*/
-	// 			highlight();
-	// 		})
-	// 	}
-	// })
 });
 
 // 给导航栏动态添加active类

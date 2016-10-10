@@ -2,12 +2,17 @@
 <%- include nav %>
 <div class="row" id="main_body">
       <div class="col-sm-8 blog-main">
-<form method='post' action='/upload' enctype='multipart/form-data' >
+<form method='post' action='/upload' enctype='multipart/form-data' role="form">
   <input type="file" multiple name='field1' required><br>
-  <input type="submit" value="Upload">
+  <button type="submit" class="btn btn-primary">上传</button>
 </form>
 <!-- /.blog-main -->
 </div>
+<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <%- include sidebar_about %>
+  <%- include sidebar_archive %>
+  <%- include sidebar_tags %>
+</div><!-- /.blog-sidebar -->
 <!-- /.row -->
 </div>
 <!-- /.container -->
