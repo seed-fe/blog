@@ -12,18 +12,13 @@ $(document).ready(function() {
 		rules:{
 			name:{
 				required:true,
-				// minlength:2,
-				// maxlength:10
 				rangelength:[2,10],
 				remote:{
-					url:"/validate_reg",
-					type:"get"
+					url:"/validate_reg"
 				}
 			},
 			password:{
 				required:true,
-				// minlength:6,
-				// maxlength:16
 				rangelength:[6,16]
 			},
 			// 这里加双引号是因为有'-'，会把字符串转换为数值然后相减
@@ -41,15 +36,11 @@ $(document).ready(function() {
 		messages:{
 			name:{
 				required:"请填写用户名",
-				// minlength:"用户名长度需在2-10位之间",
-				// maxlength:"用户名长度需在2-10位之间"
 				rangelength:"用户名长度需在2-10位之间",
 				remote:"用户名已存在"
 			},
 			password:{
 				required:"请输入密码",
-				// minlength:"密码长度在6位到16位之间",
-				// maxlength:"密码长度在6位到16位之间"
 				rangelength:"密码长度在6位到16位之间"
 			},
 			"password-repeat":{
@@ -60,20 +51,35 @@ $(document).ready(function() {
 				required:"请输入邮箱",
 				email:"请输入合法的邮箱格式"
 			}
-		}
+		},
+		//自定义错误消息放到哪里
+        errorPlacement : function(error, element) {
+            element.next().remove();//删除显示的√图标
+            // 加上×图标
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);//显示错误消息提示
+        },
+        //给未通过验证的元素进行处理
+        highlight : function(element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        //验证通过的处理
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();//与errorPlacement相似，删除×图标
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-success");
+            label.remove();//删掉错误消息
+        }
 	});
 	// 登录表单验证
 	$('#login').validate({
-		onfocuseout: true,
-		// onkeyup好像默认是true
-		onkeyup:false,
 		rules:{
 			name:{
 				required:true,
 				rangelength:[2,10],
 				remote:{
-					url:"/validate",
-					type:"get"
+					url:"/validate"
 				}
 			},
 			password:{
@@ -91,7 +97,26 @@ $(document).ready(function() {
 				required:"请输入密码",
 				rangelength:"密码长度在6位到16位之间"
 			}
-		}
+		},
+		//自定义错误消息放到哪里
+        errorPlacement : function(error, element) {
+            element.next().remove();//删除显示的√图标
+            // 加上×图标
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);//显示错误消息提示
+        },
+        //给未通过验证的元素进行处理
+        highlight : function(element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        //验证通过的处理
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();//与errorPlacement相似，删除×图标
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-success");
+            label.remove();//删掉错误消息
+        }
 	})
 });
 
@@ -101,7 +126,6 @@ function highlight () {
 	var links = $('#bs-example-navbar-collapse-1 a');
 	for (var i = 0; i < links.length; i++) {
 		if (window.location.href.indexOf(links[i].href)!=-1) {
-			// console.log(i);
 			// 这里不能写成links[i].parent，会提示parent is not a function，因为links[i]是一个dom元素，$(links[i])才是一个jQuery object
 			$(links[i]).parent().addClass('active');
 		}

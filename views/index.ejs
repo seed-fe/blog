@@ -1,7 +1,9 @@
 <%- include header %>
 <%- include nav %>
+<div class="container">
+<%- include flash %>
 <div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
+    <div class="col-sm-8 blog-main">
 <div class="blog-post">
 <% posts.forEach(function (post, index) { %>
   <p><h2 class="blog-post-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2><a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></p>

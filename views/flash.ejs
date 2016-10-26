@@ -1,0 +1,18 @@
+<div class="row">
+<div class="col-sm-8">
+<section>
+	<% if (success) { %>
+	  <div class="alert alert-success alert-dismissible col-md-4 fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= success %>
+	  </div>
+	<% } %>
+	<% if (error) { %>
+	  <div class="alert alert-warning alert-dismissible col-md-4 fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= error %>
+	  </div>  
+	<% } %>
+	</section>
+	</div>
+	</div>

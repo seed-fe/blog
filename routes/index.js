@@ -26,26 +26,25 @@ var upload = multer({
     storage: storage
 });
 module.exports = function(app) {
+  // 注册用户名远程校验
+  app.get('/validate_reg',function(req,res) {
+     User.get(req.query.name, function(err, user) {
+        // 用户名已存在就返回false，不存在就返回true
+        return user ? res.json(false) : res.json(true)
+      }) 
+  });
   // 登录远程校验
   app.get('/validate',function(req,res) {
       User.get(req.query.name, function(err, user) {
-        // 下面不要加上status，否则响应会aborted，不知道为什么……
         return !user ? res.json(false) : res.json(true)
       })
-  });
-  // 注册远程校验
-  app.get('/validate_reg',function(req,res) {
-     User.get(req.query.name, function(err, user) {
-        // 下面不要加上status，否则响应会aborted，不知道为什么……
-        return user ? res.json(false) : res.json(true)
-      }) 
   });
   // 主页, 未登录的时候显示登录和注册页，登录了才显示有文章的主页
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
     if (!req.session.user) {
-      console.log(req.flash('success'));
+      // console.log(req.flash('success'));
       res.render('main',{});
     } else {
       // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了

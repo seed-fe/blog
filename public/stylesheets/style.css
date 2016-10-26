@@ -1,19 +1,16 @@
 
 body{ padding-top: 70px; }
-.blog-post .post-main{
-	height: 200px;
-	line-height: 25px;
-	overflow-y: hidden;
-	margin-bottom: 10px;
-}
+/* 注册登录页部分样式 */
+/* 让jumbotron部分的背景色和整体一致 */
+.jumbotron{background-color: #f9f9f9;}
 
-/*  导航条上显示用户名的部分 */
-.blog-post .elli{font-size: 20px;}
-#nav_username{font-style: italic; font-weight: bold;}
-
-/* 注册页选项卡 */
+/* 让注册页选项卡居中 */
 .nav-tabs{width: 124px; margin:0 auto;}
-/* 注册页表单 */
+/* 覆盖form-group类的15px margin-bottom */
+.form-signin .form-group{
+  margin-bottom: 0px;
+}
+/* 用负的margin让注册页表单贴在一起，去掉重叠部分的圆角 */
 .form-signin input[type="text"]{
 	margin-bottom: -1px;
   border-bottom-right-radius: 0;
@@ -29,37 +26,75 @@ body{ padding-top: 70px; }
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-/* 表单整体大小固定 */
+/* 表单整体大小高度固定 */
 .tab-content{
 	height: 262px
 }
-/* 表单部分宽度 */
-.form-signin{
-  /*max-width: 430px;*/
-}
-/* 把错误信息定位到输入框内, 先用一个相对定位的div包裹输入框，然后对error的label进行绝对定位就会相对于父div定位 */
-.input-wrapper{
-  position: relative;
-}
-#name-error, #email-error, #regpassword-error, #regpasswordagain-error, #loginpassword-error{
+/* .error label和.form-control-feedback的中心对齐 */
+/* 错误信息label绝对定位，前提条件是加了has-feedback类的包裹div已经在bootstrap.css里相对定位了 */
+.error{
   position: absolute;
-  right: 8px;
+  right: 30px;
   top: 12px;
   color: #c33;
 }
+/* 这里用到了element1~element2这一CSS3选择器，选择前面有element1的每个element2元素，比直接选择.form-control-feedback的优先级要高 */
+.has-feedback label.sr-only ~ .form-control-feedback{
+  top: 5px;
+}
+/* 导航条部分样式 */
 /* 导航条背景色, rgba的a代表透明度，从0.0到1.0对应全透明到全不透明 */
-.navbar-fixed-top{
+.navbar{
   background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #086ed5, #055db5) repeat scroll 0 0;
-} 
+}
+/* 覆盖导航项a元素在hover和focus状态下的背景色和字体色 */
+.navbar-brand:hover,
+.navbar-brand:focus,
+.nav > li > a:hover,
+.nav > li > a:focus{
+  /*继承.navbar的背景色，覆盖bootstrap的设置*/
+  background-color: inherit;
+  /*白色相对灰色突出*/
+  color: #fff;
+}
 /* 导航条内字体颜色 */
-.navbar-inverse .navbar-nav > li > a {
+.navbar-nav > li > a {
+  /*更浅的灰色，在蓝色背景下相对深灰色更突出*/
     color: #cdddeb;
 }
-/* active类的字体颜色 */
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+.navbar-brand{color: #cdddeb;}
+/* active类的字体颜色为白色，背景色为更深的蓝色，以突出选中的导航项 */
+.navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+  /*参考了知乎*/
     background-color: #259;
-    color: #fff;
-    /*text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);*/
 }
-.navbar-inverse .navbar-brand{color: #cdddeb;}
+/*  导航条上显示用户名的部分 */
+#nav_username{font-style: italic; font-weight: bold;}
+
+/* 文章显示部分样式 */
+.blog-post .post-main{
+  /*height为line-height的整数倍，做到整行显示*/
+  height: 200px;
+  line-height: 25px;
+  /*超出高度部分隐藏*/
+  overflow-y: hidden;
+  margin-bottom: 10px;
+}
+
+/* 文章下的省略号 */
+.blog-post .elli{font-size: 20px;}
+
+/* 发表、编辑和评论表单部分的样式 */
+/* 让输入标签的控件内联 */
+.label-tags{
+  /*设为块级元素显示，后面的浮动元素会换行，否则label是内联元素，后面的浮动元素会跑到同一行来*/
+  display: block;
+}
+.form-group .tags{
+  /*让三个输入框在同一行排列*/
+  float: left;
+  width: 33.333%;
+  margin-bottom: 5px;
+}
+/* 边栏部分样式 */
 #sidebar-archive, #sidebar-tags{width: 83px; float: left;}

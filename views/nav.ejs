@@ -1,4 +1,4 @@
-<nav class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -38,18 +38,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-	<section>
-	<% if (success) { %>
-	  <div class="alert alert-success alert-dismissible col-md-4 fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	  <%= success %>
-	  </div>
-	<% } %>
-	<% if (error) { %>
-	  <div class="alert alert-warning alert-dismissible col-md-4 fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	  <%= error %>
-	  </div>  
-	<% } %>
-	</section>
