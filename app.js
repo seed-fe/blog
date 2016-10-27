@@ -58,7 +58,7 @@ app.use(session({
   // store选项设置会话存储实例
   // 设置它的 store 参数为 MongoStore 实例，把会话信息存储到数据库中，以避免丢失
   store: new MongoStore({
-    url: 'mongodb://localhost/blog'
+    url: settings.url
   })
 }));
 // 把实现路由功能的代码都放在 routes/index.js 里，把路由控制器和实现路由功能的函数都放到 index.js 里，app.js 中只有一个总的路由接口，也就是这里的routes(app)

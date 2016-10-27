@@ -1,7 +1,8 @@
 // 仿照用户模型，文章模型命名为Post对象
 // 通过require 'db.js'对数据库进行读写
-var mongodb = require('./db'),
-	markdown = require('markdown').markdown;
+var mongodb = require('mongodb'),
+	markdown = require('markdown').markdown,
+	settings = require('../settings');
 function Post (name, head, title, tags, post) {
 	 this.name = name;
 	 this.head = head;
@@ -37,14 +38,14 @@ Post.prototype.save = function (callback) {
 		pv: 0
 	};
 	// 打开数据库; openCallback(error, db), the callback format for the Db.open method, error: an error instance representing the error during the execution; db: the Db instance if the open method was successful
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合, 下面的db 就是数据库打开成功后的Db实例; collectionResultCallback(error, collection), collection: the collection instance
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 将文档插入posts集合; insert(docs, options, callback); insetWriteOpCallback(err, result), result: the result object if the command was executed successfully
@@ -53,7 +54,7 @@ Post.prototype.save = function (callback) {
 				// 2、加上{safe:true}表示mongodb数据库已经成功执行这条insert语句，并且插入完成或者报错后执行回调函数，类似往河里扔石头，看见水花起来了，或者不小心砸到河上的船了，然后告诉妈妈。
 				safe: true
 			}, function(err) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);//失败！返回err
 				}
@@ -67,14 +68,14 @@ Post.prototype.save = function (callback) {
 // 一次获取十篇文章
 Post.getFive = function(name, page, callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// query 为空时返回所有documents
@@ -94,7 +95,7 @@ Post.getFive = function(name, page, callback) {
 					time: -1
 					// .toArray(callback): returns an array of documents; toArrayResultCallback(error, documents), documents: all the documents the satisfy the cursor
 				}).toArray(function(err, docs) {
-					mongodb.close();
+					db.close();
 					if (err) {
 						return callback(err);//失败！返回err
 					}
@@ -113,14 +114,14 @@ Post.getFive = function(name, page, callback) {
 //获取一篇文章，根据用户名、发表日期及文章名精确获取一篇文章
 Post.getOne = function(name, day, title, callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 根据用户名、发表日期及文章名进行查询
@@ -131,8 +132,8 @@ Post.getOne = function(name, day, title, callback) {
 				"title": title
 			}, function(err, doc) {
 				if (err) {
-					// 这里把mongodb.close()移到if里面就解决了can't set headers after they're already sent 的错误，为什么？？
-					mongodb.close();
+					// 这里把db.close()移到if里面就解决了can't set headers after they're already sent 的错误，为什么？？
+					db.close();
 					return callback(err);
 				}
 				if (doc) {
@@ -144,7 +145,7 @@ Post.getOne = function(name, day, title, callback) {
 					}, {
 						$inc: {"pv": 1}
 					}, function(err) {
-						mongodb.close();
+						db.close();
 						if (err) {
 							return callback(err);
 						}
@@ -167,14 +168,14 @@ Post.getOne = function(name, day, title, callback) {
 // 返回原始发表的内容(markdown 格式)以供编辑
 Post.edit = function(name, day, title, callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 根据用户名、发表日期及文章名进行查询
@@ -183,7 +184,7 @@ Post.edit = function(name, day, title, callback) {
 				"time.day": day,
 				"title": title
 			}, function(err, doc) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);
 				}
@@ -196,14 +197,14 @@ Post.edit = function(name, day, title, callback) {
 // 更新一篇文章及其相关信息
 Post.update = function(name, day, title, post, callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 更新文章内容
@@ -214,7 +215,7 @@ Post.update = function(name, day, title, post, callback) {
 			}, {
 				$set: {post: post}
 			}, function(err) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);
 				}
@@ -227,14 +228,14 @@ Post.update = function(name, day, title, post, callback) {
 // 删除一篇文章
 Post.remove = function(name, day, title, callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 根据用户名、日期和标题查找并删除一篇文章
@@ -246,7 +247,7 @@ Post.remove = function(name, day, title, callback) {
 				// write concern??
 				w: 1
 			}, function(err) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);
 				}
@@ -259,14 +260,14 @@ Post.remove = function(name, day, title, callback) {
 // 返回所有文章存档信息
 Post.getArchive = function(callback) {
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);
 		}
 		// 打开成功则读取posts集合
 		db.collection('posts', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);
 			}
 			// 返回只包含name、time和title属性的文档组成的存档数组
@@ -277,7 +278,7 @@ Post.getArchive = function(callback) {
 			}).sort({
 				time: -1
 			}).toArray(function(err, docs) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);
 				}
@@ -289,18 +290,18 @@ Post.getArchive = function(callback) {
 
 // 返回所有标签
 Post.getTags = function(callback) {
-	mongodb.open(function (err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
     if (err) {
       return callback(err);
     }
     db.collection('posts', function (err, collection) {
       if (err) {
-        mongodb.close();
+        db.close();
         return callback(err);
       }
       //distinct 用来找出给定键的所有不同值
       collection.distinct("tags", function (err, docs) {
-        mongodb.close();
+        db.close();
         if (err) {
           return callback(err);
         }
@@ -312,13 +313,13 @@ Post.getTags = function(callback) {
 
 // 返回含有特定标签的所有文章
 Post.getTag = function(tag, callback) {
-	mongodb.open(function (err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
     if (err) {
       return callback(err);
     }
     db.collection('posts', function (err, collection) {
       if (err) {
-        mongodb.close();
+        db.close();
         return callback(err);
       }
       //查询所有 tags 数组内包含 tag 的文档
@@ -332,7 +333,7 @@ Post.getTag = function(tag, callback) {
       }).sort({
         time: -1
       }).toArray(function (err, docs) {
-        mongodb.close();
+        db.close();
         if (err) {
           return callback(err);
         }
@@ -344,13 +345,13 @@ Post.getTag = function(tag, callback) {
 
 // 返回通过标题关键字查询的所有文章信息
 Post.search = function(keyword, callback) {
-	mongodb.open(function (err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
     if (err) {
       return callback(err);
     }
     db.collection('posts', function (err, collection) {
       if (err) {
-        mongodb.close();
+        db.close();
         return callback(err);
       }
       // "i" 是正则表达式标志flags的一种，表示不区分大小写，case-insensitive
@@ -364,7 +365,7 @@ Post.search = function(keyword, callback) {
       }).sort({
         time: -1
       }).toArray(function (err, docs) {
-        mongodb.close();
+        db.close();
         if (err) {
          return callback(err);
         }
@@ -376,13 +377,13 @@ Post.search = function(keyword, callback) {
 
 // 转载一篇文章
 /*Post.reprint = function(reprint_from, reprint_to, callback) {
-  mongodb.open(function (err, db) {
+  mongodb.MongoClient.connect(settings.url, function (err, db) {
     if (err) {
       return callback(err);
     }
     db.collection('posts', function (err, collection) {
       if (err) {
-        mongodb.close();
+        db.close();
         return callback(err);
       }
       //找到被转载的文章的原文档
@@ -392,7 +393,7 @@ Post.search = function(keyword, callback) {
         "title": reprint_from.title
       }, function (err, doc) {
         if (err) {
-          mongodb.close();
+          db.close();
           return callback(err);
         }
 
@@ -430,7 +431,7 @@ Post.search = function(keyword, callback) {
           }}
         }, function (err) {
           if (err) {
-            mongodb.close();
+            db.close();
             return callback(err);
           }
         });
@@ -439,7 +440,7 @@ Post.search = function(keyword, callback) {
         collection.insert(doc, {
           safe: true
         }, function (err, post) {
-          mongodb.close();
+          db.close();
           if (err) {
             return callback(err);
           }

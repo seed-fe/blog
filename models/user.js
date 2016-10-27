@@ -1,5 +1,6 @@
 var crypto = require('crypto');
-var mongodb = require('./db');
+var mongodb = require('mongodb'),
+	settings = require('../settings');
 // 构造函数模式创建User对象
 function User (user) {
 	this.name = user.name;
@@ -22,21 +23,21 @@ User.prototype.save = function (callback) {
 		head: head
 	};
 	// 打开数据库
-	mongodb.open(function(err, db) {
+	mongodb.MongoClient.connect(settings.url, function (err, db) {
 		if (err) {
 			return callback(err);//错误，直接return err信息，后面的程序就不运行了
 		}
 		// 读取users集合
 		db.collection('users', function(err, collection) {
 			if (err) {
-				mongodb.close();
+				db.close();
 				return callback(err);//错误，直接return err信息，后面的程序就不运行了
 			}
 			// 将用户数据插入users集合; insert(docs, options, callback); insetWriteOpCallback(err, result), result: the result object if the command was executed successfully
 			collection.insertOne(user, {
 				safe: true
 			}, function(err, user) {
-				mongodb.close();
+				db.close();
 				if (err) {
 					return callback(err);//错误，直接return err信息，后面的程序就不运行了
 				}
@@ -48,14 +49,14 @@ User.prototype.save = function (callback) {
 // 读取用户信息，这里添加的get是静态方法，不能通过实例访问，直接通过类名(这里是User)访问
 User.get = function(name, callback) {
 	// 打开数据库
-    mongodb.open(function (err, db) {
+    mongodb.MongoClient.connect(settings.url, function (err, db) {
     	if (err) {
       		return callback(err);//错误，返回 err 信息
     	}
     	//读取 users 集合
     	db.collection('users', function (err, collection) {
       		if (err) {
-        		mongodb.close();
+        		db.close();
         		return callback(err);//错误，返回 err 信息
       		}
       		// 查找用户名(name键)值为name一个文档
@@ -63,7 +64,7 @@ User.get = function(name, callback) {
       		collection.findOne({
       			name: name
       		}, function(err, user) {
-      			mongodb.close();
+      			db.close();
       			if (err) {
       				return callback(err);//失败，直接return err信息
       			}
