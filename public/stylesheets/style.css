@@ -70,6 +70,13 @@ body{ padding-top: 70px; }
 }
 /*  导航条上显示用户名的部分 */
 #nav_username{font-style: italic; font-weight: bold;}
+/* 导航条按钮，由于去掉了导航条的navbar-default 类，这里要自己设置导航条按钮的样式，参照导航条部分其他链接的配色来设置 */
+.navbar-toggle{border-color: #cdddeb;}
+.navbar-toggle .icon-bar{background-color: #cdddeb;}
+.navbar-toggle:hover,
+.navbar-toggle:focus{
+  background-color: #259;
+}
 
 /* 文章显示部分样式 */
 .blog-post .post-main{
