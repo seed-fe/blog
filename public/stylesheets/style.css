@@ -1,16 +1,64 @@
 
-body{ padding-top: 70px; }
+body{ 
+  position: relative;
+  min-height: 100%;
+  padding-top: 70px;
+  padding-bottom: 40px;
+  background-color: #f9f9f9; 
+  color: #555;
+}
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color: #333;
+}
+/*
+ * Override Bootstrap's default container.
+ */
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+.container{
+  margin-bottom: 132px;
+}
 /* 注册登录页部分样式 */
 /* 让jumbotron部分的背景色和整体一致 */
-.jumbotron{background-color: #f9f9f9;}
+.jumbotron{background-color: inherit;}
 
 /* 让注册页选项卡居中 */
 .nav-tabs{width: 124px; margin:0 auto;}
-/* 覆盖form-group类的15px margin-bottom */
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+/* 覆盖bootstrap.css默认的form-group类的15px margin-bottom */
 .form-signin .form-group{
   margin-bottom: 0px;
 }
-/* 用负的margin让注册页表单贴在一起，去掉重叠部分的圆角 */
+/* 用负的margin让注册/登录页表单贴在一起，去掉重叠部分的圆角 */
 .form-signin input[type="text"]{
 	margin-bottom: -1px;
   border-bottom-right-radius: 0;
@@ -18,13 +66,20 @@ body{ padding-top: 70px; }
 }
 .form-signin input[type="email"] {
   margin-bottom: -1px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  border-radius: 0;
 }
-.form-signin input[id="regpassword"] {
+/* id选择器作为关键选择器的时候不要增加标签名了，因为id是唯一的，增加标签只会减缓匹配过程，除非需要动态改变元素class，并且这个class还同时应用在其他一些元素上 */
+#regpassword {
   margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
+}
+#regpasswordagain {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#loginpassword{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0; 
 }
 /* 表单整体大小高度固定 */
 .tab-content{
@@ -79,6 +134,30 @@ body{ padding-top: 70px; }
 }
 
 /* 文章显示部分样式 */
+/*
+ * Main column and sidebar layout
+ */
+
+.blog-main {
+  font-size: 15px;
+  line-height: 1.5;
+}
+/*
+ * Blog posts
+ */
+
+.blog-post {
+  margin-bottom: 60px;
+}
+.blog-post-title {
+  margin-bottom: 5px;
+  font-size: 30px;
+}
+.blog-post-meta {
+  margin-bottom: 20px;
+  color: #999;
+  font-size: 14px;
+}
 .blog-post .post-main{
   /*height为line-height的整数倍，做到整行显示*/
   height: 200px;
@@ -104,4 +183,48 @@ body{ padding-top: 70px; }
   margin-bottom: 5px;
 }
 /* 边栏部分样式 */
+/* Sidebar modules for boxing content */
+.sidebar-module {
+  padding: 15px;
+  margin: 0 -15px 15px;
+}
+.sidebar-module-inset {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.sidebar-module-inset p:last-child,
+.sidebar-module-inset ul:last-child,
+.sidebar-module-inset ol:last-child {
+  margin-bottom: 0;
+}
 #sidebar-archive, #sidebar-tags{width: 83px; float: left;}
+
+/* Pagination */
+.pager {
+  margin-bottom: 60px;
+  text-align: left;
+}
+.pager > li > a {
+  width: 140px;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 30px;
+}
+/*
+ * Footer
+ */
+
+.blog-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 40px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
