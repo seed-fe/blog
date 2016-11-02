@@ -40,33 +40,35 @@ module.exports = function(app) {
       })
   });
   // 主页, 未登录的时候显示登录和注册页，登录了才显示有文章的主页
+  app.get('/',function(req,res) {
+    if (req.session.user) {
+    	return res.redirect('/index');
+    } else {
+    	res.render('main',{});
+    }
+  });
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
-    if (!req.session.user) {
-      // console.log(req.flash('success'));
-      res.render('main',{});
-    } else {
-      // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了
-      var page = parseInt(req.query.p) || 1;
-      // Post.getAll(null, function(err, posts) {
-      Post.getFive(null, page, function(err, posts, total) {
-        if (err) {
-          posts = [];
-        }
-        // 调用 res.render() 渲染模版，并将其产生的页面直接返回给客户端。它接受两个参数，第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译
-        // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
-        res.render('index', { 
-          user: req.session.user,
-          posts: posts,
-          page: page,
-          isFirstPage: (page - 1) == 0,
-          isLastPage: ((page - 1) * 5 + posts.length) == total,
-          success: req.flash('success').toString(),
-          error: req.flash('error').toString()
-        });
+    // 判断是否是第一页，并把请求的页数转换成number类型，或操作第一个值true就不再求第二个值了
+    var page = parseInt(req.query.p) || 1;
+    // Post.getAll(null, function(err, posts) {
+    Post.getFive(null, page, function(err, posts, total) {
+      if (err) {
+        posts = [];
+      }
+      // 调用 res.render() 渲染模版，并将其产生的页面直接返回给客户端。它接受两个参数，第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译
+      // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
+      res.render('index', { 
+        user: req.session.user,
+        posts: posts,
+        page: page,
+        isFirstPage: (page - 1) == 0,
+        isLastPage: ((page - 1) * 5 + posts.length) == total,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
       });
-    }
+    });
   });
   app.post('/login', checkNotLogin);
   app.post('/login', function (req, res) {
