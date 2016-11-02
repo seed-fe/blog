@@ -79,12 +79,12 @@ module.exports = function(app) {
     User.get(req.body.name, function (err, user) {
       if (!user) {
         req.flash('error', '用户不存在!'); 
-        return res.redirect('/index');//用户不存在则跳转到登录页
+        return res.redirect('/');//用户不存在则跳转到登录页
       }
       //检查密码是否一致
       if (user.password != password) {
         req.flash('error', '密码错误!'); 
-        return res.redirect('/index');//密码错误则跳转到登录页
+        return res.redirect('/');//密码错误则跳转到登录页
       }
       //用户名密码都匹配后，将用户信息存入 session
       req.session.user = user;
@@ -104,7 +104,7 @@ module.exports = function(app) {
     if (password_re != password) {
       req.flash('error', '两次输入的密码不一致!'); 
       // res.redirect： 重定向功能，实现了页面的跳转
-      return res.redirect('/index');//返回注册页
+      return res.redirect('/');//返回注册页
     }
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
@@ -121,20 +121,20 @@ module.exports = function(app) {
       if (err) {
         // 加载了flash middleware才有req.flash(), 用于flash messages
         req.flash('error', err);
-        return res.redirect('/index');
+        return res.redirect('/');
       }
       // User对象的get方法第二个参数是callback回调函数，这里有err和user两个参数，在user.js的66行，只有成功查询到了用户信息callback才会传入null和user两个参数，否则只会传入err一个参数，因此只有用户已存在下面的if判断才为true
       if (user) {
         req.flash('error', '用户已存在!');
-        return res.redirect('/index');//返回注册页
+        return res.redirect('/');//返回注册页
       }
       //如果不存在则新增用户
       newUser.save(function (err, user) {
         if (err) {
           req.flash('error', err);
-          return res.redirect('/index');//注册失败返回注册页
+          return res.redirect('/');//注册失败返回注册页
         }
-        req.session.user = newUser;//注册成功将则用户信息存入 session
+        req.session.user = newUser;//注册成功则将用户信息存入 session
         // Set a flash message by passing the key, followed by the value, to req.flash().
         req.flash('success', '注册成功!');
         res.redirect('/index');//注册成功后返回主页
@@ -176,7 +176,7 @@ module.exports = function(app) {
     // req.session.user = null;
     req.session.destroy();
     // req.flash('success', '登出成功!');
-    res.redirect('/index');//登出成功后跳转到主页
+    res.redirect('/');//登出成功后跳转到注册登录页
   });
   // 文件上传
   app.get('/upload', checkLogin);
@@ -274,7 +274,7 @@ module.exports = function(app) {
     User.get(req.params.name, function(err, user) {
       if (!user) {
         req.flash('error', '用户不存在！');
-        return res.redirect('/index');// 用户不存在则跳转到主页
+        return res.redirect('/');// 用户不存在则跳转到注册登录页
       }
       // 查询并返回该用户第page页的10篇文章
       // Post.getAll(user.name, function(err, posts) {
