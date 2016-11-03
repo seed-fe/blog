@@ -6,4 +6,4 @@
 * 删除了多余的文件
 * 其实前后端都还有很多可以完善和学习的地方，不过作为一个初学的demo，想先做到这里，如果有人看到，也欢迎提提意见帮助我这个新人
 
-项目演示地址：[N-blog bootstrap demo](https://demo-bootstrap-blog.herokuapp.com/index)
+项目演示地址：[N-blog bootstrap demo](https://demo-bootstrap-blog.herokuapp.com/)
