@@ -47,6 +47,7 @@ module.exports = function(app) {
     	res.render('main',{});
     }
   });
+  app.get('/index', checkLogin);
   app.get('/index', function (req, res) {
     // console.log(req.session.user);
     // console.log(user);
