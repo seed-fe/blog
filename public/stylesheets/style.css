@@ -1,7 +1,6 @@
-
+/* html相对定位，让footer相对html绝对定位 */
+html{min-height: 100%; position: relative;}
 body{ 
-  position: relative;
-  min-height: 100%;
   padding-top: 70px;
   padding-bottom: 40px;
   background-color: #f9f9f9; 
