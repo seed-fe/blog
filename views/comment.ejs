@@ -40,7 +40,8 @@
   <% } %>
   <div  class="form-group">
     <label for="comment-post">正文：</label>
-    <textarea id="comment-post" class="form-control" name="post" rows="5" cols="80" required></textarea>
+    <!-- 这里之前修改的时候吧name属性设为了post，因为是直接从edit.ejs粘贴过来的，这样提交post请求的时候req.body.content就变成空了，这样comment.content 就是null，就会出现'cannot read property slice of null'的错误，详见github上wiki部分 -->
+    <textarea id="comment-post" class="form-control" name="content" rows="5" cols="80" required></textarea>
   </div>
   <button type="submit" class="btn btn-primary">留言</button>
 </form>

@@ -137,6 +137,7 @@ Post.getOne = function(name, day, title, callback) {
 					return callback(err);
 				}
 				if (doc) {
+					// console.log(doc.comments);
 					// 每访问一次，pv值增加1
 					collection.update({
 						"name": name,
@@ -155,7 +156,7 @@ Post.getOne = function(name, day, title, callback) {
 					// 一开始是没有评论的，comments空
 					if (doc.comments) {
 						doc.comments.forEach(function(comment) {
-							comment.content = markdown.toHTML(comment.content);
+							comment.content = markdown.toHTML(comment.content);								
 						});
 					}			
 					callback(null, doc);//返回查询的一篇文章	
