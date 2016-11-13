@@ -1,6 +1,7 @@
 var fs = require('fs');
 var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
 var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
+var compression = require('compression');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -24,6 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 // 通过 express -e blog 只是初始化了一个使用 ejs 模板引擎的工程而已，比如 node_modules 下添加了 ejs 模块，views 文件夹下有 index.ejs 。并不是说强制该工程只能使用 ejs 不能使用其他的模板引擎比如 jade，真正指定使用哪个模板引擎的是 app.set('view engine', 'ejs');
 // 设置视图模板引擎为 ejs; 通过 express -e blog 只是初始化了一个使用 ejs 模板引擎的工程而已，比如 node_modules 下添加了 ejs 模块，views 文件夹下有 index.ejs 。并不是说强制该工程只能使用 ejs 不能使用其他的模板引擎比如 jade，真正指定使用哪个模板引擎的是 app.set('view engine', 'ejs');
 app.set('view engine', 'ejs');
+app.use(compression());
 
 // app.use([path,] function [, function...]), app.use用来准备中间件，第一个参数是路径（可选），不指定的话就是'/'，对app的每个请求都会执行回调函数，否则就只对指定路径执行回调函数
 // flash 是一个在 session 中用于存储信息的特定区域。信息写入 flash ，下一次显示完毕后即被清除。典型的应用是结合重定向的功能，确保信息是提供给下一个被渲染的页面
@@ -54,7 +56,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   key: settings.db,//cookie name
-  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days，cookie 的生存期，毫秒为单位
+  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days，cookie 的生存期，毫秒为单位，过期后cookie的sessionID就自动删除了
   // store选项设置会话存储实例
   // 设置它的 store 参数为 MongoStore 实例，把会话信息存储到数据库中，以避免丢失
   store: new MongoStore({
