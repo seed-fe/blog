@@ -2,6 +2,12 @@
 <%- include nav %>
 <div class="container">
 <%- include flash %>
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="/index">主页</a></li>
+    <li class="active">上传图片</li>
+  </ol>
+</div>
 <div class="row" id="main_body">
       <div class="col-sm-8 blog-main">
 <form method='post' action='/upload' enctype='multipart/form-data' role="form">

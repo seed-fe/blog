@@ -44,7 +44,9 @@ module.exports = function(app) {
     if (req.session.user) {
     	return res.redirect('/index');
     } else {
-    	res.render('main',{});
+    	res.render('main',{
+    		title: 'N-blog·基于Express和Bootstrap的多人博客系统'
+    	});
     }
   });
   app.get('/index', checkLogin);
@@ -60,7 +62,8 @@ module.exports = function(app) {
       }
       // 调用 res.render() 渲染模版，并将其产生的页面直接返回给客户端。它接受两个参数，第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译
       // res.render(view [, locals] [, callback]), The view argument is a string that is the file path of the view file to render. This can be an absolute path, or a path relative to the views setting, which here is 'app.set('views', path.join(__dirname, 'views'));'.
-      res.render('index', { 
+      res.render('index', {
+      	title: '首页·N-blog',
         user: req.session.user,
         posts: posts,
         page: page,
@@ -148,7 +151,7 @@ module.exports = function(app) {
     // console.log(req.session.user);
     // 渲染模板时一定要把模板中需要用到的变量都传进去
     res.render('post', { 
-      // title: '发表',
+      title: '发表文章·N-blog',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -183,7 +186,7 @@ module.exports = function(app) {
   app.get('/upload', checkLogin);
   app.get('/upload', function (req, res) {
     res.render('upload', {
-      // title: '文件上传',
+      title: '上传图片·N-blog',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -203,7 +206,7 @@ module.exports = function(app) {
         return res.redirect('/index');
       }
       res.render('archive', {
-        // title: '存档',
+        title: '归档·N-blog',
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -219,7 +222,7 @@ module.exports = function(app) {
       return res.redirect('/index');
       }
       res.render('tags', {
-        // title: '标签',
+        title: '标签·N-blog',
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -235,7 +238,8 @@ module.exports = function(app) {
         return res.redirect('/index');
       }
       res.render('tag', {
-        // title: 'TAG:' + req.params.tag,
+        title: 'TAG:' + req.params.tag + '·N-blog',
+        tag: req.params.tag,
         posts: posts,
         user: req.session.user,
         success: req.flash('success').toString(),
@@ -246,7 +250,7 @@ module.exports = function(app) {
   // 友情链接页面
   app.get('/links',function(req,res) {
     res.render('links', {
-      // title: '友情链接',
+      title: '友情链接·N-blog',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -260,9 +264,10 @@ module.exports = function(app) {
         return res.redirect('/index');
       }
       res.render('search', {
-        // title: "SEARCH:" + req.query.keyword,
+        title: "SEARCH:" + req.query.keyword + '·N-blog',
         posts: posts,
         user: req.session.user,
+        keyword: req.query.keyword,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
       });
@@ -285,7 +290,7 @@ module.exports = function(app) {
           return res.redirect('/index');
         }
         res.render('user', {
-          // title: user.name,
+          title: user.name + '·N-blog',
           posts: posts,
           page: page,
           isFirstPage: (page - 1) == 0,
@@ -305,7 +310,7 @@ module.exports = function(app) {
           return res.redirect('/index');
         }
         res.render('article', {
-          // title: req.params.title,
+          title: req.params.title + '·N-blog',
           post: post,
           user: req.session.user,
           success: req.flash('success').toString(),
@@ -351,7 +356,7 @@ module.exports = function(app) {
         return res.redirect('back');
       }
       res.render('edit', {
-        // title: '编辑',
+        title: '编辑·N-blog',
         post: post,
         user: req.session.user,
         success: req.flash('success').toString(),

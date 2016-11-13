@@ -165,7 +165,7 @@ h6, .h6 {
   overflow-y: hidden;
   margin-bottom: 10px;
 }
-
+.comment{padding-left:4em;}
 /* 文章下的省略号 */
 .blog-post .elli{font-size: 20px;}
 

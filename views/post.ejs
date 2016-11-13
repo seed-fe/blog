@@ -2,6 +2,13 @@
 <%- include nav %>
 <div class="container">
 <%- include flash %>
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="/index">主页</a></li>
+    <li><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+    <li class="active">发表</li>
+  </ol>
+</div>
 <div class="row" id="main_body">
       <div class="col-sm-8 blog-main">
 <form method="post" role="form">

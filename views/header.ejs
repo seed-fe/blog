@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <!-- 让IE8、IE9浏览器运行在最新的渲染模式下 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,,chrome=1">
+<meta charset=utf-8>
+<meta name="keywords" content="Bootstrap,express,Node.js,MongoDb,jQuery,jQuery validation plugin,http">
+<meta name="description" content="基于nswbmw的N-blog项目仿写的多人博客系统，前端用Bootstrap进行了样式改造，模仿了知乎的导航条和登录页，并用jQuery validation plugin进行了前端表单验证，用compression中间件进行了gzip压缩，还有简单的html语义化与SEO优化">
+<meta name="author" content="Bill,zzlfullstack@gmail.com">
 <!-- viewport元数据标签，width属性控制视口的宽度。可以像width=600这样设为确切的像素数，或者设为device-width这一特殊值来指代比例为100%时屏幕宽度的CSS像素数值。（相应有height及device-height属性，可能对包含基于视口高度调整大小及位置的元素的页面有用。）
 initial-scale属性控制页面最初加载时的缩放等级。maximum-scale、minimum-scale及user-scalable属性控制允许用户以怎样的方式放大或缩小页面。 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<title>N-Blog</title>
+<title><%= title%></title>
 <!-- <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <!-- <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css"> -->

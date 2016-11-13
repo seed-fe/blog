@@ -2,6 +2,12 @@
 <%- include nav %>
 <div class="container">
 <%- include flash %>
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="/index">主页</a></li>
+    <li class="active">归档</li>
+  </ol>
+</div>
 <div class="row" id="main_body">
       <div class="col-sm-8 blog-main">
 <ul class="archive">
@@ -12,7 +18,7 @@
     <li><h3><%= post.time.year %></h3></li>
   <% lastYear=post.time.year } %>
   <li><time><%= post.time.day %></time></li>
-  <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></li>
+  <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文"><%= post.title %></a></li>
 <% }) %>
 </ul>
 <!-- /.blog-main -->
