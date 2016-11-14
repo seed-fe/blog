@@ -4,8 +4,8 @@
 <%- include flash %>
 <div class="row">
   <ol class="breadcrumb">
-    <li><a href="/index">主页</a></li>
-    <li><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+    <li><a href="/index" title="回到主页">主页</a></li>
+    <li><a href="/u/<%= user.name %>" title="回到你的文章列表"><%= user.name %></a></li>
     <li class="active">发表</li>
   </ol>
 </div>

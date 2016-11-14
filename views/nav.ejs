@@ -1,4 +1,5 @@
-<nav class="navbar navbar-fixed-top" role="navigation">
+<header>
+  <nav class="navbar navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -20,20 +21,21 @@
         <!-- <li><a title="友情链接" href="/links">Links</a></li> -->
         <% if (user) { %>
           <li><a title="访问你的文章页" href="/u/<%= user.name%>" id="nav_username">Hi, <%= user.name %> !</a></li>
-		      <li><a title="上传" href="/upload">上传</a></li>
-		      <li><a title="发表" href="/post">发表</a></li>
-		      <li><a title="登出" href="/logout">登出</a></li>
+          <li><a title="上传" href="/upload">上传</a></li>
+          <li><a title="发表" href="/post">发表</a></li>
+          <li><a title="登出" href="/logout">登出</a></li>
         <% } %>
       </ul>   
       <form class="navbar-form navbar-right" role="search" action='/search' method="get">
-      	<div class="input-group">
-      	  <label for="search" class="sr-only">搜索文章</label>
-	      <input id="search" type="text" name="keyword" class="form-control" required placeholder="Search">
-	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="submit">Go!</button>
-	      </span>
-    	</div>
+        <div class="input-group">
+          <label for="search" class="sr-only">搜索文章</label>
+        <input id="search" type="text" name="keyword" class="form-control" required placeholder="Search">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">Go!</button>
+        </span>
+      </div>
       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
-</nav>
+</nav>  
+</header>

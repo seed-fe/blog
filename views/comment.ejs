@@ -1,9 +1,8 @@
-<br />
 <% if(post.comments){ %>
   <% post.comments.forEach(function (comment, index) { %>
     <div class="comment">
     <p><img src="<%= comment.head %>" class="l_head" /><a href="<%= comment.website %>"><%= comment.name %></a>
-    <span class="blog-post-meta"> 回复于 <%= comment.time %></span></p>
+    <span class="blog-post-meta"> 回复于 <time datetime="<%= comment.time %>"><%= comment.time %></time></span></p>
     <p><%- comment.content %></p>
   </div>
   <% }) %>
