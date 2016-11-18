@@ -1,26 +1,26 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<%- include flash %>
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li class="active">标签</li>
-  </ol>
-</div>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<% posts.forEach(function (tag, index) { %>
-  <a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的所有文章"><%= tag %></a>
-<% }) %>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-<%- include sidebar_about%>
-  <%- include sidebar_archive %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+	<%- include flash %>
+	<div class="row">
+  	<ol class="breadcrumb">
+    	<li><a href="/index" title="回到主页">主页</a></li>
+    	<li class="active">标签</li>
+  	</ol>
+	</div>
+	<div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+			<% posts.forEach(function (tag, index) { %>
+  			<a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的所有文章"><%= tag %></a>
+			<% }) %>
+		<!-- /.blog-main -->
+		</div>
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+			<%- include sidebar_about%>
+  		<%- include sidebar_archive %>
+		</div><!-- /.blog-sidebar -->
+	<!-- /.row -->
+	</div>
 <!-- /.container -->
 </div>
 

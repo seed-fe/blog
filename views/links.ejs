@@ -3,30 +3,29 @@
 <%- include nav %>
 <% } %>
 <div class="container">
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li class="active">友情链接</li>
-  </ol>
-</div>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<ul style="list-style:none">
-  <li><h3><a href="https://github.com/seed-fe" title="欢迎访问我的github主页" target="_blank" rel="nofollow">我的github主页</a></h3>star me or give some suggestions</li>
-  <li><h3><a href="http://devdocs.io/" title="可以查很多文档的网站" target="_blank" rel="nofollow">可以查很多文档的网站</a></h3>适合前端程序员</li>
-</ul>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <% if (user) { %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-  <% } %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/index" title="回到主页">主页</a></li>
+      <li class="active">友情链接</li>
+    </ol>
+  </div>
+  <div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+      <ul style="list-style:none">
+        <li><h3><a href="https://github.com/seed-fe" title="欢迎访问我的github主页" target="_blank" rel="nofollow">我的github主页</a></h3>star me or give some suggestions</li>
+        <li><h3><a href="http://devdocs.io/" title="可以查很多文档的网站" target="_blank" rel="nofollow">可以查很多文档的网站</a></h3>适合前端程序员</li>
+      </ul>
+    <!-- /.blog-main -->
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <%- include sidebar_about %>
+      <% if (user) { %>
+        <%- include sidebar_archive %>
+        <%- include sidebar_tags %>
+      <% } %>
+    </div><!-- /.blog-sidebar -->
+  <!-- /.row -->
+  </div>
 <!-- /.container -->
 </div>
-
 <%- include footer %>
