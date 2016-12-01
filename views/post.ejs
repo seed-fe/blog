@@ -1,40 +1,40 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<%- include flash %>
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li><a href="/u/<%= user.name %>" title="回到你的文章列表"><%= user.name %></a></li>
-    <li class="active">发表</li>
-  </ol>
-</div>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<form method="post" role="form">
-	<div  class="form-group">
-		<label for="post-tile">标题：</label>
-		<input id="post-tile" class="form-control input-lg" type="text" name="title" required>
+	<%- include flash %>
+	<div class="row">
+  	<ol class="breadcrumb">
+    	<li><a href="/index" title="回到主页">主页</a></li>
+    	<li><a href="/u/<%= user.name %>" title="回到你的文章列表"><%= user.name %></a></li>
+    	<li class="active">发表</li>
+  	</ol>
 	</div>
-	<div  class="form-group">
-		<label for="post-tag" class="label-tags">标签：</label>
-		<input id="post-tag" class="form-control input-sm tags" type="text" name="tag1"><input class="form-control input-sm tags" type="text" name="tag2"><input class="form-control input-sm tags" type="text" name="tag3">
+	<div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+			<form method="post" role="form">
+				<div  class="form-group">
+					<label for="post-tile">标题：</label>
+					<input id="post-tile" class="form-control input-lg" type="text" name="title" required>
+				</div>
+				<div  class="form-group">
+					<label for="post-tag" class="label-tags">标签：</label>
+					<input id="post-tag" class="form-control input-sm tags" type="text" name="tag1"><input class="form-control input-sm tags" type="text" name="tag2"><input class="form-control input-sm <tags></tags>" type="text" name="tag3">
+				</div>
+				<div  class="form-group">
+					<label for="post-post">正文：</label>
+					<textarea id="post-post" class="form-control" name="post" rows="20" cols="100" required></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">发表</button>
+			</form>
+		<!-- /.blog-main -->
+		</div>
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  		<%- include sidebar_about %>
+  		<%- include sidebar_archive %>
+  		<%- include sidebar_tags %>
+		</div><!-- /.blog-sidebar -->
+	<!-- /.row -->
 	</div>
-	<div  class="form-group">
-		<label for="post-post">正文：</label>
-		<textarea id="post-post" class="form-control" name="post" rows="20" cols="100" required></textarea>
-	</div>
-	<button type="submit" class="btn btn-primary">发表</button>
-</form>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
 <!-- /.container -->
 </div>
 <%- include footer %>

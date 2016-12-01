@@ -1,50 +1,50 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li><a href="/u/<%= post.name %>" title="回到<%= post.name %>的文章列表"><%= post.name %></a></li>
-    <li class="active"><%= post.title %></li>
-  </ol>
-</div>
-<%- include flash %>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<article class="blog-post">
- <p><h2 class="blog-post-title"><%= post.title %></h2><a href="/u/<%= post.name %>" title="阅读全文"><img src="<%= post.head %>" class="r_head" /></a></p>
-<p>
-  <%#user存在代表用户登录，user.name == post.name代表登录的用户正是发布这篇文章的用户，两者同时满足时才能进行编辑和删除操作#%>
-  <% if (user && (user.name == post.name)) { %>
-  	<span><a class="edit" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="编辑文章">编辑</a></span>
-  	<span><a class="edit" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="删除文章">删除</a></span>
-  <% } %>
-</p>
-<p class="blog-post-meta">
-  作者：<a href="/u/<%= post.name %>" title="查看<%= post.name %>的全部文章"><%= post.name %></a> | 
-  日期：<time datetime="<%= post.time.minute %>"><%= post.time.minute %></time>
-  标签：
-  <% if (post.tags) { %>
-  	<% post.tags.forEach(function (tag, index) { %>
-  		<% if (tag) { %>
-  			<a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的全部文章"><%= tag %></a>
-  		<% } %>
-  	<% }) %>
-  <% } %>
-</p>
-<p><%- post.post %></p>
-<p class="blog-post-meta">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
-<%- include comment%>
-</article>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/index" title="回到主页">主页</a></li>
+      <li><a href="/u/<%= post.name %>" title="回到<%= post.name %>的文章列表"><%= post.name %></a></li>
+      <li class="active"><%= post.title %></li>
+    </ol>
+  </div>
+  <%- include flash %>
+  <div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+      <article class="blog-post">
+        <p><h2 class="blog-post-title"><%= post.title %></h2><a href="/u/<%= post.name %>" title="阅读全文"><img src="<%= post.head %>" class="r_head" /></a></p>
+        <p>
+          <%#user存在代表用户登录，user.name == post.name代表登录的用户正是发布这篇文章的用户，两者同时满足时才能进行编辑和删除操作#%>
+         <% if (user && (user.name == post.name)) { %>
+  	      <span><a class="edit" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="编辑文章">编辑</a></span>
+  	       <span><a class="edit" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="删除文章">删除</a></span>
+          <% } %>
+        </p>
+        <p class="blog-post-meta">
+          作者：<a href="/u/<%= post.name %>" title="查看<%= post.name %>的全部文章"><%= post.name %></a> | 
+          日期：<time datetime="<%= post.time.minute %>"><%= post.time.minute %></time>
+          标签：
+          <% if (post.tags) { %>
+  	        <% post.tags.forEach(function (tag, index) { %>
+  		        <% if (tag) { %>
+  			       <a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的全部文章"><%= tag %></a>
+  		        <% } %>
+  	        <% }) %>
+          <% } %>
+        </p>
+        <p><%- post.post %></p>
+        <p class="blog-post-meta">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
+        <%- include comment%>
+      </article>
+    <!-- /.blog-main -->
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <%- include sidebar_about %>
+      <%- include sidebar_archive %>
+      <%- include sidebar_tags %>
+    </div><!-- /.blog-sidebar -->
+  <!-- /.row -->
+  </div>
 <!-- /.container -->
 </div>
 <%- include footer %>

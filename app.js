@@ -25,6 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 // 通过 express -e blog 只是初始化了一个使用 ejs 模板引擎的工程而已，比如 node_modules 下添加了 ejs 模块，views 文件夹下有 index.ejs 。并不是说强制该工程只能使用 ejs 不能使用其他的模板引擎比如 jade，真正指定使用哪个模板引擎的是 app.set('view engine', 'ejs');
 // 设置视图模板引擎为 ejs; 通过 express -e blog 只是初始化了一个使用 ejs 模板引擎的工程而已，比如 node_modules 下添加了 ejs 模块，views 文件夹下有 index.ejs 。并不是说强制该工程只能使用 ejs 不能使用其他的模板引擎比如 jade，真正指定使用哪个模板引擎的是 app.set('view engine', 'ejs');
 app.set('view engine', 'ejs');
+// gzip压缩响应
 app.use(compression());
 
 // app.use([path,] function [, function...]), app.use用来准备中间件，第一个参数是路径（可选），不指定的话就是'/'，对app的每个请求都会执行回调函数，否则就只对指定路径执行回调函数

@@ -1,35 +1,35 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<%- include flash %>
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li><a href="/tags" title="回到标签列表">标签</a></li>
-    <li class="active"><%= tag %></li>
-  </ol>
-</div>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<ul class="archive">
-<% var lastYear = 0 %>
-<% posts.forEach(function (post, index) { %>
-  <% if (lastYear != post.time.year) { %>
-    <li><h3><%= post.time.year %></h3></li>
-  <% lastYear = post.time.year } %>
-    <li><time><%= post.time.day %></time></li>
-    <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文"><%= post.title %></a></li>
-<% }) %>
-</ul>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+  <%- include flash %>
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/index" title="回到主页">主页</a></li>
+      <li><a href="/tags" title="回到标签列表">标签</a></li>
+      <li class="active"><%= tag %></li>
+    </ol>
+  </div>
+  <div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+      <ul class="archive">
+        <% var lastYear = 0 %>
+        <% posts.forEach(function (post, index) { %>
+          <% if (lastYear != post.time.year) { %>
+            <li><h3><%= post.time.year %></h3></li>
+            <% lastYear = post.time.year } %>
+            <li><time><%= post.time.day %></time></li>
+            <li><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文"><%= post.title %></a></li>
+        <% }) %>
+      </ul>
+    <!-- /.blog-main -->
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <%- include sidebar_about %>
+      <%- include sidebar_archive %>
+      <%- include sidebar_tags %>
+    </div><!-- /.blog-sidebar -->
+  <!-- /.row -->
+  </div>
 <!-- /.container -->
 </div>
 <%- include footer %>

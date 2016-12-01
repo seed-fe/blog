@@ -1,29 +1,28 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<%- include flash %>
-<div class="row">
-  <ol class="breadcrumb">
-    <li><a href="/index" title="回到主页">主页</a></li>
-    <li class="active">上传图片</li>
-  </ol>
-</div>
-<div class="row" id="main_body">
-      <div class="col-sm-8 blog-main">
-<form method='post' action='/upload' enctype='multipart/form-data' role="form">
-  <input type="file" multiple name='field1' required><br>
-  <button type="submit" class="btn btn-primary">上传</button>
-</form>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+  <%- include flash %>
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/index" title="回到主页">主页</a></li>
+      <li class="active">上传图片</li>
+    </ol>
+  </div>
+  <div class="row" id="main_body">
+    <div class="col-sm-8 blog-main">
+      <form method='post' action='/upload' enctype='multipart/form-data' role="form">
+        <input type="file" multiple name='field1' required><br>
+        <button type="submit" class="btn btn-primary">上传</button>
+      </form>
+    <!-- /.blog-main -->
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <%- include sidebar_about %>
+      <%- include sidebar_archive %>
+      <%- include sidebar_tags %>
+    </div><!-- /.blog-sidebar -->
+  <!-- /.row -->
+  </div>
 <!-- /.container -->
 </div>
-
 <%- include footer %>

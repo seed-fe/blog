@@ -1,49 +1,48 @@
 <%- include header %>
 <%- include nav %>
 <div class="container">
-<%- include flash %>
-<div class="row">
-  <ol class="breadcrumb">
-    <li class="active">主页</li>
-  </ol>
-</div>
-<div class="row" id="main_body">
+  <%- include flash %>
+  <div class="row">
+    <ol class="breadcrumb">
+      <li class="active">主页</li>
+    </ol>
+  </div>
+  <div class="row" id="main_body">
     <div class="col-sm-8 blog-main">
-<div class="blog-post">
-<% posts.forEach(function (post, index) { %>
-  <article>
-    <p><h2 class="blog-post-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文"><%= post.title %></a></h2><a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></p>
-  <p class="blog-post-meta">
-  <!-- <%  %>这里'%'两端的空格一定要有 -->
-    作者：<a title="访问<%= post.name %>的文章页" href="/u/<%= post.name %>"><%= post.name %></a> | 
-    日期：<time datetime="<%= post.time.minute %>"><%= post.time.minute %></time>
-    标签：
-    <% if (post.tags) { %>
-      <% post.tags.forEach(function (tag, index) { %>
-        <% if (tag) { %>
-          <a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的全部文章"><%= tag %></a>
-        <% } %>
-      <% }) %>
-    <% } %>
-  </p>
-  
-  <div class="post-main"><%- post.post %></div>
-  <p class="elli">...</p>
-  <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文">阅读全文</a>
-  <p class="blog-post-meta">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
-  </article>
-<% }) %>
-</div>
-<%- include paging %>
-<!-- /.blog-main -->
-</div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-  <%- include sidebar_about %>
-  <%- include sidebar_archive %>
-  <%- include sidebar_tags %>
-</div><!-- /.blog-sidebar -->
-<!-- /.row -->
-</div>
+      <div class="blog-post">
+        <% posts.forEach(function (post, index) { %>
+          <article>
+            <p><h2 class="blog-post-title"><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文"><%= post.title %></a></h2><a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></p>
+            <p class="blog-post-meta">
+              <!-- <%  %>这里'%'两端的空格一定要有 -->
+              作者：<a title="访问<%= post.name %>的文章页" href="/u/<%= post.name %>"><%= post.name %></a> | 
+              日期：<time datetime="<%= post.time.minute %>"><%= post.time.minute %></time>
+              标签：
+              <% if (post.tags) { %>
+                <% post.tags.forEach(function (tag, index) { %>
+                  <% if (tag) { %>
+                    <a class="label label-success" href="/tags/<%= tag %>" title="查看<%= tag %>标签的全部文章"><%= tag %></a>
+                  <% } %>
+                <% }) %>
+              <% } %>
+            </p>
+            <div class="post-main"><%- post.post %></div>
+            <p class="elli">...</p>
+            <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" title="阅读全文">阅读全文</a>
+            <p class="blog-post-meta">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
+          </article>
+        <% }) %>
+      </div>
+      <%- include paging %>
+    <!-- /.blog-main -->
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <%- include sidebar_about %>
+      <%- include sidebar_archive %>
+      <%- include sidebar_tags %>
+    </div><!-- /.blog-sidebar -->
+  <!-- /.row -->
+  </div>
 <!-- /.container -->
 </div>
 <%- include footer %>
